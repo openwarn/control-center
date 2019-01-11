@@ -6,6 +6,12 @@ Dieses Projekt ist Teil der Masterarbeit von Alexander Noack (TU Ilmenau; Fachge
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
 
+## Build (Docker)
+
+```bash
+docker build -t control-center .
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
