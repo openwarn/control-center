@@ -7,9 +7,16 @@ import {
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
+  MatGridListModule,
+  MatCardModule,
+  MatMenuModule,
 } from '@angular/material';
 
 import { SiteNavigationComponent } from './site-navigation.component';
+import { RouterModule } from '@angular/router';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from '../app-routing.module';
 
 describe('SiteNavigationComponent', () => {
   let component: SiteNavigationComponent;
@@ -17,15 +24,22 @@ describe('SiteNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SiteNavigationComponent],
+      declarations: [SiteNavigationComponent, DashboardComponent],
       imports: [
         NoopAnimationsModule,
+        BrowserModule,
         LayoutModule,
         MatButtonModule,
         MatIconModule,
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
+        RouterModule,
+        AppRoutingModule,
+        MatGridListModule,
+        MatCardModule,
+        MatButtonModule,
+        MatMenuModule
       ]
     }).compileComponents();
   }));

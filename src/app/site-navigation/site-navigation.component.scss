@@ -15,3 +15,7 @@
   top: 0;
   z-index: 1;
 }
+
+a.active {
+  background-color: lighten(#3f51b5, 45%);
+}

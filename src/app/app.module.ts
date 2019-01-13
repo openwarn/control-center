@@ -1,19 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule } from '@angular/material';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatGridListModule,
+  MatCardModule,
+  MatMenuModule
+} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SiteNavigationComponent } from './site-navigation/site-navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MonitoringModule } from './monitoring/monitoring.module';
+import { DashboardSpawnerComponent } from './dashboard-spawner/dashboard-spawner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SiteNavigationComponent,
-    DashboardComponent
+    DashboardComponent,
+    DashboardSpawnerComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +39,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MonitoringModule
   ],
   providers: [],
   bootstrap: [AppComponent]
