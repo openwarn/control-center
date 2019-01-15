@@ -12,18 +12,18 @@ export class HealthStatusService {
   public static READINESS_PROBE_INTERVAL = 2000; // ms
 
   private dummyHealthStatus: BehaviorSubject<HealthStatus> | null;
-  private dummyHealthHttpSubscription: Subscription;
+  private dummyReadinessProbeSubscription: Subscription;
 
   constructor(
     private httpClient: HttpClient
   ) {}
 
   private initHealthStatusObservation() {
-    interval(HealthStatusService.READINESS_PROBE_INTERVAL).subscribe(
+    this.dummyReadinessProbeSubscription = interval(HealthStatusService.READINESS_PROBE_INTERVAL).subscribe(
       () => {
-        this.dummyHealthHttpSubscription = this.httpClient.get(environment.services.dummy.baseUrl + '/health').subscribe(
+        return this.httpClient.get(environment.services.dummy.baseUrl + '/health').subscribe(
           result => {
-            if (result['status'] && result['status'] == 'ok') {
+            if (result['status'] && result['status'] === 'ok') {
               this.dummyHealthStatus.next(HealthStatus.UP);
             } else {
               this.dummyHealthStatus.next(HealthStatus.DOWN);
@@ -46,7 +46,7 @@ export class HealthStatusService {
   }
 
   stopMonitoring(): void {
-    this.dummyHealthHttpSubscription.unsubscribe();
+    this.dummyReadinessProbeSubscription.unsubscribe();
     this.dummyHealthStatus = null;
   }
 
