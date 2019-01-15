@@ -9,17 +9,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HealthStatusService {
 
+  public static READINESS_PROBE_INTERVAL = 2000; // ms
+
   private dummyHealthStatus: BehaviorSubject<HealthStatus> | null;
   private dummyHealthHttpSubscription: Subscription;
 
   constructor(
     private httpClient: HttpClient
-  ) {
-    this.initHealthStatusObservation();
-  }
+  ) {}
 
   private initHealthStatusObservation() {
-    interval(2000).subscribe(
+    interval(HealthStatusService.READINESS_PROBE_INTERVAL).subscribe(
       () => {
         this.dummyHealthHttpSubscription = this.httpClient.get(environment.services.dummy.baseUrl + '/health').subscribe(
           result => {
