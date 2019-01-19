@@ -17,6 +17,10 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from '../app-routing.module';
+import { WarningCreatorComponent } from '../warning-creator/warning-creator.component';
+import { WarningFeedComponent } from '../warning-feed/warning-feed.component';
+import { HealthStatusBoardComponent } from '../monitoring/health-status-board/health-status-board.component';
+import { DashboardSpawnerComponent } from '../dashboard-spawner/dashboard-spawner.component';
 
 describe('SiteNavigationComponent', () => {
   let component: SiteNavigationComponent;
@@ -24,7 +28,14 @@ describe('SiteNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SiteNavigationComponent, DashboardComponent],
+      declarations: [
+        SiteNavigationComponent,
+        DashboardComponent,
+        WarningCreatorComponent,
+        WarningFeedComponent,
+        HealthStatusBoardComponent,
+        DashboardSpawnerComponent
+      ],
       imports: [
         NoopAnimationsModule,
         BrowserModule,
@@ -39,7 +50,7 @@ describe('SiteNavigationComponent', () => {
         MatGridListModule,
         MatCardModule,
         MatButtonModule,
-        MatMenuModule
+        MatMenuModule,
       ]
     }).compileComponents();
   }));

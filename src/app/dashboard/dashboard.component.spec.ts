@@ -10,6 +10,8 @@ import {
 } from '@angular/material';
 
 import { DashboardComponent } from './dashboard.component';
+import { MonitoringModule } from '../monitoring/monitoring.module';
+import { DashboardSpawnerComponent } from '../dashboard-spawner/dashboard-spawner.component';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -17,7 +19,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
+      declarations: [DashboardComponent, DashboardSpawnerComponent],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -26,6 +28,7 @@ describe('DashboardComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
+        MonitoringModule
       ]
     }).compileComponents();
   }));
