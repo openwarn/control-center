@@ -19,13 +19,17 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { DashboardSpawnerComponent } from './dashboard-spawner/dashboard-spawner.component';
+import { WarningCreatorComponent } from './warning-creator/warning-creator.component';
+import { WarningFeedComponent } from './warning-feed/warning-feed.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SiteNavigationComponent,
     DashboardComponent,
-    DashboardSpawnerComponent
+    DashboardSpawnerComponent,
+    WarningCreatorComponent,
+    WarningFeedComponent
   ],
   imports: [
     BrowserModule,
