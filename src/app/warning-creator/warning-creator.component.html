@@ -1,4 +1,154 @@
 <div class="grid-container">
   <h1 class="mat-h1">Warnung erstellen</h1>
 
+  <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="warning-card">
+      <mat-card-header>
+        <mat-card-title>Warnmeldung</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Sender" formControlName="senderId">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Warnungs-ID" formControlName="alertId">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Zielgruppe" formControlName="scope">
+                <mat-option *ngFor="let scope of scopes" [value]="scope.value">
+                  {{ scope.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['scope'].hasError('required')">
+                Scope is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Meldungsstatus" formControlName="status">
+                <mat-option *ngFor="let stat of status" [value]="stat.value">
+                  {{ stat.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['status'].hasError('required')">
+                Status is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Meldungstyp" formControlName="msgType">
+                <mat-option *ngFor="let msgType of msgTypes" [value]="msgType.value">
+                  {{ msgType.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['msgType'].hasError('required')">
+                Message type is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <h3>Beschreibungen</h3>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Sprache" formControlName="language">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Kurzbeschreibung" formControlName="headline">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Bereichsbeschreibung" formControlName="areaDescr">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Kategorie des Ereignisses" formControlName="category">
+                <mat-option *ngFor="let category of categories" [value]="category.value">
+                  {{ category.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['category'].hasError('required')">
+                Category is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <h3>Risikoeinschätzung</h3>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Dringlichkeit" formControlName="urgency">
+                <mat-option *ngFor="let urgency of urgencies" [value]="urgency.value">
+                  {{ urgency.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['urgency'].hasError('required')">
+                Urgency is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Schweregrad" formControlName="severity">
+                <mat-option *ngFor="let severity of severities" [value]="severity.value">
+                  {{ severity.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['severity'].hasError('required')">
+                Severity is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Gewissheit" formControlName="certainty">
+                <mat-option *ngFor="let certainty of certainties" [value]="certainty.value">
+                  {{ certainty.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addressForm.controls['certainty'].hasError('required')">
+                Certainty is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <h3>Handlungsempfehlungen</h3>
+        <div class="row">
+          <div class="col">
+            <mat-selection-list formControlName="responseType">
+              <mat-list-option *ngFor="let responseType of responseTypes" [value]="responseType.value">
+                {{responseType.name}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button [disabled]="addressForm.isValid" mat-raised-button color="primary" type="submit">Absenden</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
 </div>

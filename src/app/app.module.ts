@@ -9,7 +9,11 @@ import {
   MatListModule,
   MatGridListModule,
   MatCardModule,
-  MatMenuModule
+  MatMenuModule,
+  MatInputModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatBadgeModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +25,8 @@ import { MonitoringModule } from './monitoring/monitoring.module';
 import { DashboardSpawnerComponent } from './dashboard-spawner/dashboard-spawner.component';
 import { WarningCreatorComponent } from './warning-creator/warning-creator.component';
 import { WarningFeedComponent } from './warning-feed/warning-feed.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LevelSliderModule } from './level-slider/level-slider.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +50,13 @@ import { WarningFeedComponent } from './warning-feed/warning-feed.component';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    MonitoringModule
+    MonitoringModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatBadgeModule,
+    LevelSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
