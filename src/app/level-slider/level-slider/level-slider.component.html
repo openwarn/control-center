@@ -1,0 +1,7 @@
+<mat-slider [step]="resolution" 
+            [tickInterval]="resolution"
+            [thumbLabel]="isThumbLabel"
+            [max]="numOfSteps-1"
+            [(value)]="sliderValue">
+</mat-slider>
+<span class="label">{{ propertyName }}: {{ labelMapping[value].name }}</span>
