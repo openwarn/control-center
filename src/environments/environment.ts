@@ -7,6 +7,9 @@ export const environment = {
   services: {
     dummy: {
       baseUrl: 'http://localhost:5000'
+    },
+    warningDistribution: {
+      baseUrl: 'http://localhost:9101'
     }
   }
 };

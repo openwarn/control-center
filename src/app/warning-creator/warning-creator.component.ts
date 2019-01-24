@@ -16,7 +16,6 @@ export class WarningCreatorComponent implements OnInit {
     scope: ['Public', Validators.required],
     status: ['Actual', Validators.required],
     msgType: ['Alert', Validators.required],
-    shipping: ['free', Validators.required],
     // warning info
     language: ['en-US', Validators.required],
     headline: [

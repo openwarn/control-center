@@ -10,6 +10,10 @@ import {
   MatGridListModule,
   MatCardModule,
   MatMenuModule,
+  MatFormFieldModule,
+  MatOptionModule,
+  MatSelectChange,
+  MatSelectModule,
 } from '@angular/material';
 
 import { SiteNavigationComponent } from './site-navigation.component';
@@ -21,6 +25,7 @@ import { WarningCreatorComponent } from '../warning-creator/warning-creator.comp
 import { WarningFeedComponent } from '../warning-feed/warning-feed.component';
 import { HealthStatusBoardComponent } from '../monitoring/health-status-board/health-status-board.component';
 import { DashboardSpawnerComponent } from '../dashboard-spawner/dashboard-spawner.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('SiteNavigationComponent', () => {
   let component: SiteNavigationComponent;
@@ -51,6 +56,10 @@ describe('SiteNavigationComponent', () => {
         MatCardModule,
         MatButtonModule,
         MatMenuModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule
       ]
     }).compileComponents();
   }));

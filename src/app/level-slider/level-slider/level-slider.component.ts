@@ -18,10 +18,16 @@ export class LevelSliderComponent implements OnInit {
   isThumbLabel = true;
   propertyName = 'Gewissheit';
   stepDescription = 'Extreme';
-  sliderValue = 1;
+  sliderValue = 0;
+  value = 'Unknown';
 
   @Input()
-  labelMapping: Array<LabelMapping>;
+  labelMapping: Array<LabelMapping> = [
+    {
+      name: 'Unknown',
+      value: 'None'
+    }
+  ];
 
   constructor() { }
 

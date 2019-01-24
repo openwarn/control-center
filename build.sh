@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm test && npm run build && docker build -t control-center .
+npm test && npm run lint && npm run build && docker build -t control-center .

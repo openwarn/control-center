@@ -7,6 +7,9 @@ import {
   MatInputModule,
   MatRadioModule,
   MatSelectModule,
+  MatOptionModule,
+  MatFormFieldModule,
+  MatListModule
 } from '@angular/material';
 import { WarningCreatorComponent } from './warning-creator.component';
 
@@ -25,6 +28,9 @@ describe('WarningCreatorComponent', () => {
         MatInputModule,
         MatRadioModule,
         MatSelectModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatListModule
       ]
     })
     .compileComponents();
