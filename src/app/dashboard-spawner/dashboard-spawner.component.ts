@@ -21,7 +21,9 @@ export class DashboardSpawnerComponent implements OnInit {
     }
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
-    const injector = Injector.create([]);
+    const injector = Injector.create({
+      providers: []
+    });
 
     const component = componentFactory.create(injector);
     this.spawnHost.insert(component.hostView);

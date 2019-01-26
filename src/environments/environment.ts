@@ -10,6 +10,9 @@ export const environment = {
     },
     warningDistribution: {
       baseUrl: 'http://localhost:9101'
+    },
+    nodeDummy: {
+      baseUrl: 'http://localhost:3000'
     }
   }
 };

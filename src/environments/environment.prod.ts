@@ -6,6 +6,9 @@ export const environment = {
     },
     warningDistribution: {
       baseUrl: 'http://localhost:9101' // TODO: Umleitung über Gateway
+    },
+    nodeDummy: {
+      baseUrl: 'http://localhost:3000' // TODO: Entfernen nach Testphase
     }
   }
 };

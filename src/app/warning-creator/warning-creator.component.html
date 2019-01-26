@@ -146,7 +146,7 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button [disabled]="addressForm.isValid" mat-raised-button color="primary" type="submit">Absenden</button>
+        <button [disabled]="!addressForm.valid" mat-raised-button color="primary" type="submit">Absenden</button>
       </mat-card-actions>
     </mat-card>
   </form>
