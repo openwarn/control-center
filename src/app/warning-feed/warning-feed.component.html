@@ -1,4 +1,11 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Aktuelle Warnungen</h1>
+  <h1 class="mat-h1">Aktuelle Warnungen </h1>
+
+  <mat-list-item *ngFor="let item of items; last as last">
+    <div mat-line><mat-icon mat-list-icon>warning</mat-icon> {{ item.warningId }}</div>
+    <h4 mat-line>{{item.title}}</h4>
+    <p mat-line> {{item.description}} </p>
+    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+ </mat-list-item>
 
 </div>
