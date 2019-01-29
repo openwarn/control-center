@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 })
 export class WarningFeedComponent implements OnInit, OnDestroy {
 
-  private socket: SocketIOClient.Socket;
   private birdSubscription: Subscription;
 
   constructor(

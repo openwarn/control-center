@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, interval, Subscription } from 'rxjs';
+import { Observable, interval, Subject } from 'rxjs';
+import { flatMap, map, catchError } from 'rxjs/operators';
 import { HealthStatus } from './health-status.enum';
-import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -9,45 +9,34 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HealthStatusService {
 
-  public static READINESS_PROBE_INTERVAL = 2000; // ms
-
-  private dummyHealthStatus: BehaviorSubject<HealthStatus> | null;
-  private dummyReadinessProbeSubscription: Subscription;
+  public static READINESS_PROBE_INTERVAL = 1200; // ms
 
   constructor(
     private httpClient: HttpClient
-  ) {}
+  ) { }
 
-  private initHealthStatusObservation() {
-    this.dummyReadinessProbeSubscription = interval(HealthStatusService.READINESS_PROBE_INTERVAL).subscribe(
-      () => {
-        return this.httpClient.get(environment.services.dummy.baseUrl + '/health').subscribe(
+
+  service(host: string): Observable<any> {
+
+    return interval(HealthStatusService.READINESS_PROBE_INTERVAL)
+     .pipe(
+       flatMap(() => this.httpClient.get(host + '/health'))
+      )
+      .pipe(
+        map(
           result => {
             if (result['status'] && result['status'] === 'ok') {
-              this.dummyHealthStatus.next(HealthStatus.UP);
+              return HealthStatus.UP;
             } else {
-              this.dummyHealthStatus.next(HealthStatus.DOWN);
+              return HealthStatus.DOWN;
             }
-          },
-          (error) => {
-            this.dummyHealthStatus.next(HealthStatus.DOWN);
           }
-        );
-      }
-    );
-  }
-
-  observeDummyHealthStatus(): Observable<HealthStatus> {
-    if (!this.dummyHealthStatus) {
-      this.dummyHealthStatus = new BehaviorSubject<HealthStatus>(HealthStatus.UNKNOWN);
-      this.initHealthStatusObservation();
-    }
-    return this.dummyHealthStatus;
-  }
-
-  stopMonitoring(): void {
-    this.dummyReadinessProbeSubscription.unsubscribe();
-    this.dummyHealthStatus = null;
+       )
+      ).pipe(
+        catchError(
+          (error) => HealthStatus.DOWN
+        )
+      );
   }
 
 }
