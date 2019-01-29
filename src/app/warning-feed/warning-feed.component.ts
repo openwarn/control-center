@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import * as io from 'socket.io-client';
 import { environment } from '../../environments/environment';
+import { WebsocketListenerService } from '../websocket/websocket-listener.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-warning-feed',
@@ -10,24 +11,20 @@ import { environment } from '../../environments/environment';
 export class WarningFeedComponent implements OnInit, OnDestroy {
 
   private socket: SocketIOClient.Socket;
+  private birdSubscription: Subscription;
 
-  constructor() { }
+  constructor(
+    private websocketListenerService: WebsocketListenerService
+  ) {}
 
   ngOnInit() {
-    this.socket = io(environment.services.nodeDummy.baseUrl);
-
-    this.socket.on('connect', () => {
-      console.log(this.socket.connected); // true
-      this.socket.emit('birds', 'birdie');
-      this.socket.on('message', (msg) => {
-        console.log('bird arrived', msg);
-      });
-    });
+    this.birdSubscription = this.websocketListenerService.topic(environment.services.nodeDummy.baseUrl, 'birds').subscribe(
+      (msg) => console.log('msg arrived at feed', msg)
+    );
   }
 
   ngOnDestroy() {
-    this.socket.removeAllListeners();
-    this.socket.close();
+    this.birdSubscription.unsubscribe();
   }
 
 }
