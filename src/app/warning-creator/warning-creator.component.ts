@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
+import { CapDeliveryService } from '../cap/cap-delivery.service';
+import { CapXmlService } from '../cap/cap-xml.service';
+import { CapAlert } from '../cap/cap-alert';
 
 @Component({
   selector: 'app-warning-creator',
@@ -9,10 +12,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class WarningCreatorComponent implements OnInit {
 
-  addressForm = this.fb.group({
+  alertForm = this.fb.group({
     // metadata
-    senderId: [{value: 'DE-3424234', disabled: true}, Validators.required],
-    alertId: [{value: 'DE-W-3223423', disabled: true}, Validators.required],
+    senderId: [{value: 'DE-3424234', disabled: false}, Validators.required],
+    alertId: [{value: 'DE-W-3223423', disabled: false}, Validators.required],
     scope: ['Public', Validators.required],
     status: ['Actual', Validators.required],
     msgType: ['Alert', Validators.required],
@@ -23,14 +26,12 @@ export class WarningCreatorComponent implements OnInit {
       Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])
     ],
     areaDescr: [null, Validators.required],
-    category: [null, Validators.required],
+    category: ['Met', Validators.required],
     urgency: ['Unknown', Validators.required],
     severity: ['Unknown', Validators.required],
     certainty: ['Unknown', Validators.required],
     responseType: [null, Validators.required]
   });
-
-  hasUnitNumber = false;
 
   scopes = [
     {name: 'Öffentlich', value: 'Public'},
@@ -171,11 +172,23 @@ export class WarningCreatorComponent implements OnInit {
     }
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private capDeliveryService: CapDeliveryService,
+    private capXmlSevice: CapXmlService
+  ) {}
 
   onSubmit() {
-    alert('Thanks!');
-    console.log('form data', this.addressForm.value);
+    const capAlert = new CapAlert();
+    const capXml = this.capXmlSevice.convertCapAlertToXml(capAlert);
+    this.capDeliveryService.deliver(capXml).subscribe(
+      () => {
+        alert('Warnung wurde erfolgreich versandt!');
+        this.alertForm.reset();
+        this.alertForm.clearValidators();
+      },
+      (err) => alert('Es ist ein Fehler aufgetreten, versuchen sie es erneut')
+    );
   }
 
   ngOnInit() {

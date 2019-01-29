@@ -1,7 +1,7 @@
 <div class="grid-container">
   <h1 class="mat-h1">Warnung erstellen</h1>
 
-  <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+  <form [formGroup]="alertForm" novalidate (ngSubmit)="onSubmit()">
     <mat-card class="warning-card">
       <mat-card-header>
         <mat-card-title>Warnmeldung</mat-card-title>
@@ -27,7 +27,7 @@
                   {{ scope.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['scope'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['scope'].hasError('required')">
                 Scope is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -41,7 +41,7 @@
                   {{ stat.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['status'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['status'].hasError('required')">
                 Status is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -53,7 +53,7 @@
                   {{ msgType.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['msgType'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['msgType'].hasError('required')">
                 Message type is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -89,7 +89,7 @@
                   {{ category.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['category'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['category'].hasError('required')">
                 Category is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -104,7 +104,7 @@
                   {{ urgency.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['urgency'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['urgency'].hasError('required')">
                 Urgency is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -116,7 +116,7 @@
                   {{ severity.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['severity'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['severity'].hasError('required')">
                 Severity is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -128,7 +128,7 @@
                   {{ certainty.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['certainty'].hasError('required')">
+              <mat-error *ngIf="alertForm.controls['certainty'].hasError('required')">
                 Certainty is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -146,7 +146,8 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button [disabled]="!addressForm.valid" mat-raised-button color="primary" type="submit">Absenden</button>
+        <button [disabled]="!alertForm.valid" mat-raised-button color="primary" type="submit">Absenden</button>
+        <button mat-raised-button type="reset">Zurücksetzen</button>
       </mat-card-actions>
     </mat-card>
   </form>
