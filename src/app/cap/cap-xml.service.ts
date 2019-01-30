@@ -23,10 +23,13 @@ export class CapXmlService {
   }
 
   convertXmlToCapAlert(xml: string): CapAlert {
-    const rawAlert = xmlConverter.xml2json(xml);
-    const alert = new CapAlert();
+    const rawAlert: any = xmlConverter.xml2js(xml, {
+      compact: true
+    });
+    console.log('xml alert as js object', rawAlert);
 
-    console.log('alert as json', rawAlert);
+    const alert = new CapAlert();
+    alert.alertId = rawAlert.alert.identifier._text;
 
     return alert;
   }
