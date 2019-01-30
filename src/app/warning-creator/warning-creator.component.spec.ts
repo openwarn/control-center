@@ -12,6 +12,9 @@ import {
   MatListModule
 } from '@angular/material';
 import { WarningCreatorComponent } from './warning-creator.component';
+import { CapDeliveryService } from '../cap/cap-delivery.service';
+import { CapXmlService } from '../cap/cap-xml.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('WarningCreatorComponent', () => {
   let component: WarningCreatorComponent;
@@ -30,7 +33,12 @@ describe('WarningCreatorComponent', () => {
         MatSelectModule,
         MatOptionModule,
         MatFormFieldModule,
-        MatListModule
+        MatListModule,
+        HttpClientModule
+      ],
+      providers: [
+        CapDeliveryService,
+        CapXmlService
       ]
     })
     .compileComponents();

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WarningFeedComponent } from './warning-feed.component';
+import { MatListModule, MatIconModule } from '@angular/material';
 
 describe('WarningFeedComponent', () => {
   let component: WarningFeedComponent;
@@ -8,7 +9,11 @@ describe('WarningFeedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WarningFeedComponent ]
+      declarations: [ WarningFeedComponent ],
+      imports: [
+        MatListModule,
+        MatIconModule
+      ]
     })
     .compileComponents();
   }));

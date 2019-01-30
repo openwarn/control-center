@@ -13,6 +13,9 @@ export const environment = {
     },
     nodeDummy: {
       baseUrl: 'http://localhost:3000'
+    },
+    webdisseminator: {
+      baseUrl: 'http://localhost:9201'
     }
   }
 };
