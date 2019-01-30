@@ -13,7 +13,7 @@ export class CapDeliveryService {
   ) { }
 
   deliver(capXml: string): Observable<any> {
-    const url = environment.services.warningDistribution.baseUrl + '/api/v1/alert';
+    const url = environment.services.warningDistribution.baseUrl + '/api/v1/alerts';
     return this.httpClient.post(
       url, {
       xml: capXml
