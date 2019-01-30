@@ -15,6 +15,7 @@ export class WebsocketListenerService {
         const socket = io(socketAdress);
         socket.on(topicName, (msg) => {
           console.log(`${topicName} arrived`, msg);
+          observer.next(msg.value);
         });
         return () => {
           console.log(`websocket listener of topic ${topicName} stopped listening`);
