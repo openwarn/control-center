@@ -25,7 +25,7 @@ export class WarningCreatorComponent implements OnInit {
       null,
       Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])
     ],
-    areaDescr: [null, Validators.required],
+    areaDesc: [null, Validators.required],
     category: ['Met', Validators.required],
     urgency: ['Unknown', Validators.required],
     severity: ['Unknown', Validators.required],

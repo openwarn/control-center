@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { CapXmlService } from './cap-xml.service';
 import { CapAlert } from './cap-alert';
 import { AlertInfo } from './alert-info';
+import * as moment from 'moment';
 
 describe('CapXmlService', () => {
   let capXmlService: CapXmlService;
@@ -14,9 +15,36 @@ describe('CapXmlService', () => {
     expect(capXmlService).toBeTruthy();
   });
 
+  describe('moment.js', () => {
+
+    it('should format to GMT', () => {
+      const originalFormat = '2003-06-11T20:56:00-07:00';
+      const dateTime = new Date(originalFormat);
+
+      expect(moment(dateTime).utc().format('YYYY-MM-DDThh:mm:ss')).toBe('2003-06-12T03:56:00');
+    });
+
+  });
+
   describe('XML to CapAlert conversion', () => {
 
-   it('should convert sample xml file to CapAlert', () => {
+    it('should convert sample monolingual xml earthquake alert file to CapAlert', () => {
+      const service: CapXmlService = TestBed.get(CapXmlService);
+      const capAlert = service.convertXmlToCapAlert(getSampleEarthquakeAlertCapXML());
+
+      expect(capAlert.alertId).toBe('TRI13970876.7');
+      expect(capAlert.msgType).toBe('Update');
+      expect(capAlert.event).toBe('Earthquake');
+      expect(capAlert.category).toBe('Geo');
+      expect(capAlert.certainty).toBe('Observed');
+      expect(capAlert.severity).toBe('Minor');
+      expect(capAlert.urgency).toBe('Past');
+
+      expect(capAlert.alertInfos[0].headline).toBe('Some Earthquake Headline');
+      expect(capAlert.alertInfos[0].areaDescription).toBe('Some Area');
+    });
+
+    it('should convert sample multilingual xml amber alert file to CapAlert', () => {
       const service: CapXmlService = TestBed.get(CapXmlService);
       const capAlert = service.convertXmlToCapAlert(getSampleMultilingualAmberAlertCapXML());
 
@@ -25,7 +53,11 @@ describe('CapXmlService', () => {
       expect(capAlert.certainty).toBe('Likely');
       expect(capAlert.severity).toBe('Severe');
       expect(capAlert.urgency).toBe('Immediate');
+
+      expect(capAlert.alertInfos[0].headline).toBe('Amber Alert in Los Angeles County');
+      expect(capAlert.alertInfos[0].areaDescription).toBe('Los Angeles County');
     });
+
 
   });
 
@@ -35,6 +67,7 @@ describe('CapXmlService', () => {
       alert.alertId = 'Any Alert Id';
       alert.category = 'Met';
       alert.certainty = 'Unknown';
+      // Sun Dec 17 1995 03:24:00 GMT
       alert.originatedAt = new Date();
       alert.event = 'Any Event';
       alert.severity = 'Minor';
@@ -44,19 +77,21 @@ describe('CapXmlService', () => {
 
       const xml = capXmlService.convertCapAlertToXml(alert);
       expect(xml).toContain('<?xml version="1.0" encoding="utf-8"?>');
+      expect(xml).toContain('<alert xmlns="urn:oasis:names:tc:emergency:cap:1.2">');
     });
 
     it('should create xml from sample alert', () => {
       const infoGerman = new AlertInfo();
       infoGerman.language = 'de-DE';
       infoGerman.headline = 'Deutscher Titel';
-      infoGerman.areaDescr = 'Irgendeine Ortsbeschreibung';
+      infoGerman.areaDescription = 'Irgendeine Ortsbeschreibung';
 
       const alert = new CapAlert();
       alert.alertId = 'Any Alert Id';
       alert.category = 'Met';
       alert.certainty = 'Unknown';
-      alert.originatedAt = new Date();
+      // Sun Dec 17 1995 03:24:00 GMT
+      alert.originatedAt = new Date('December 17, 1995 03:24:00 GMT');
       alert.event = 'Any Event';
       alert.severity = 'Minor';
       alert.urgency = 'Unlikely';
@@ -66,6 +101,7 @@ describe('CapXmlService', () => {
 
       const xml = capXmlService.convertCapAlertToXml(alert);
       expect(xml).toContain('<identifier>Any Alert Id</identifier>');
+      expect(xml).toContain('<sent>1995-12-17T03:24:00-00:00</sent>');
     });
 
   });
@@ -141,7 +177,7 @@ function getSampleMultilingualAmberAlertCapXML() {
 function getSampleEarthquakeAlertCapXML() {
    return `<?xml version = "1.0" encoding = "UTF-8"?>
    <alert xmlns = "urn:oasis:names:tc:emergency:cap:1.2">
-     <identifier>TRI13970876.2</identifier>
+     <identifier>TRI13970876.7</identifier>
      <sender>trinet@caltech.edu</sender>
      <sent>2003-06-11T20:56:00-07:00</sent>
      <status>Actual</status>
@@ -155,7 +191,7 @@ function getSampleEarthquakeAlertCapXML() {
        <severity>Minor</severity>
        <certainty>Observed</certainty>
        <senderName>Southern California Seismic Network (TriNet) operated by Caltech and USGS</senderName>
-       <headline>EQ 3.4 Imperial County CA</headline>
+       <headline>Some Earthquake Headline</headline>
        <description>A minor earthquake measuring 3.4 on the Richter scale 
        occurred near Brawley, California at 8:30 PM Pacific Daylight Time on Wednesday,
        June 11, 2003. (This event has now been reviewed by a seismologist)</description>
@@ -181,9 +217,7 @@ function getSampleEarthquakeAlertCapXML() {
          <value>Excellent</value>
        </parameter>
        <area>
-         <areaDesc>1 mi. WSW of Brawley, CA; 11 mi. N of El Centro, CA;
-         30 mi. E of OCOTILLO (quarry);
-         1 mi. N of the Imperial Fault</areaDesc>
+         <areaDesc>Some Area</areaDesc>
          <circle>32.9525,-115.5527 0</circle>
        </area>
      </info>
