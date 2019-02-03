@@ -1,25 +1,81 @@
 import { TestBed } from '@angular/core/testing';
 import { CapXmlService } from './cap-xml.service';
+import { CapAlert } from './cap-alert';
+import { AlertInfo } from './alert-info';
 
 describe('CapXmlService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let capXmlService: CapXmlService;
+
+   beforeEach(() => {
+      capXmlService = new CapXmlService();
+   });
 
   it('should be created', () => {
-    const service: CapXmlService = TestBed.get(CapXmlService);
-    expect(service).toBeTruthy();
+    expect(capXmlService).toBeTruthy();
   });
 
-  it('should convert sample xml file to CapAlert', () => {
-    const service: CapXmlService = TestBed.get(CapXmlService);
-    service.convertXmlToCapAlert(getSampleCapXML());
+  describe('XML to CapAlert conversion', () => {
+
+   it('should convert sample xml file to CapAlert', () => {
+      const service: CapXmlService = TestBed.get(CapXmlService);
+      const capAlert = service.convertXmlToCapAlert(getSampleMultilingualAmberAlertCapXML());
+
+      expect(capAlert.alertId).toBe('XYZ-3243-LM');
+      expect(capAlert.category).toBe('Rescue');
+      expect(capAlert.certainty).toBe('Likely');
+      expect(capAlert.severity).toBe('Severe');
+      expect(capAlert.urgency).toBe('Immediate');
+    });
+
+  });
+
+  describe('CapAlert to XML conversion', () => {
+    it('should add xml version and encoding', () => {
+      const alert = new CapAlert();
+      alert.alertId = 'Any Alert Id';
+      alert.category = 'Met';
+      alert.certainty = 'Unknown';
+      alert.originatedAt = new Date();
+      alert.event = 'Any Event';
+      alert.severity = 'Minor';
+      alert.urgency = 'Unlikely';
+      alert.msgType = 'Alert';
+      alert.status = 'Actual';
+
+      const xml = capXmlService.convertCapAlertToXml(alert);
+      expect(xml).toContain('<?xml version="1.0" encoding="utf-8"?>');
+    });
+
+    it('should create xml from sample alert', () => {
+      const infoGerman = new AlertInfo();
+      infoGerman.language = 'de-DE';
+      infoGerman.headline = 'Deutscher Titel';
+      infoGerman.areaDescr = 'Irgendeine Ortsbeschreibung';
+
+      const alert = new CapAlert();
+      alert.alertId = 'Any Alert Id';
+      alert.category = 'Met';
+      alert.certainty = 'Unknown';
+      alert.originatedAt = new Date();
+      alert.event = 'Any Event';
+      alert.severity = 'Minor';
+      alert.urgency = 'Unlikely';
+      alert.msgType = 'Alert';
+      alert.status = 'Actual';
+      alert.alertInfos.push(infoGerman);
+
+      const xml = capXmlService.convertCapAlertToXml(alert);
+      expect(xml).toContain('<identifier>Any Alert Id</identifier>');
+    });
+
   });
 
 });
 
-function getSampleCapXML() {
+function getSampleMultilingualAmberAlertCapXML() {
   return `<?xml version = "1.0" encoding = "UTF-8"?>
 <alert xmlns = "urn:oasis:names:tc:emergency:cap:1.2">
-   <identifier>KAR0-0306112239-SW</identifier>
+   <identifier>XYZ-3243-LM</identifier>
    <sender>KARO@CLETS.DOJ.CA.GOV</sender>
    <sent>2003-06-11T22:39:00-07:00</sent>
    <status>Actual</status>
@@ -81,3 +137,55 @@ function getSampleCapXML() {
    </info>
 </alert>`;
 }
+
+function getSampleEarthquakeAlertCapXML() {
+   return `<?xml version = "1.0" encoding = "UTF-8"?>
+   <alert xmlns = "urn:oasis:names:tc:emergency:cap:1.2">
+     <identifier>TRI13970876.2</identifier>
+     <sender>trinet@caltech.edu</sender>
+     <sent>2003-06-11T20:56:00-07:00</sent>
+     <status>Actual</status>
+     <msgType>Update</msgType>
+     <scope>Public</scope>
+     <references>trinet@caltech.edu,TRI13970876.1,2003-06-11T20:30:00-07:00</references>
+     <info>
+       <category>Geo</category>
+       <event>Earthquake</event>
+       <urgency>Past</urgency>
+       <severity>Minor</severity>
+       <certainty>Observed</certainty>
+       <senderName>Southern California Seismic Network (TriNet) operated by Caltech and USGS</senderName>
+       <headline>EQ 3.4 Imperial County CA</headline>
+       <description>A minor earthquake measuring 3.4 on the Richter scale 
+       occurred near Brawley, California at 8:30 PM Pacific Daylight Time on Wednesday,
+       June 11, 2003. (This event has now been reviewed by a seismologist)</description>
+       <web>http://www.trinet.org/scsn/scsn.html</web>
+       <parameter>
+         <valueName>EventID</valueName>
+         <value>13970876</value>
+       </parameter>
+       <parameter>
+         <valueName>Version</valueName>
+         <value>1</value>
+       </parameter>
+       <parameter>
+         <valueName>Magnitude</valueName>
+         <value>3.4 Ml</value>
+       </parameter>
+       <parameter>
+         <valueName>Depth</valueName>
+         <value>11.8 mi.</value>
+       </parameter>
+       <parameter>
+         <valueName>Quality</valueName>
+         <value>Excellent</value>
+       </parameter>
+       <area>
+         <areaDesc>1 mi. WSW of Brawley, CA; 11 mi. N of El Centro, CA;
+         30 mi. E of OCOTILLO (quarry);
+         1 mi. N of the Imperial Fault</areaDesc>
+         <circle>32.9525,-115.5527 0</circle>
+       </area>
+     </info>
+   </alert>`;
+ }
