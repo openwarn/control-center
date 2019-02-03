@@ -57,7 +57,7 @@ export class WarningCreatorComponent implements OnInit {
     {name: 'Transportinfrastruktur', value: 'Transport'},
     {name: 'Sonstige Infrastruktur', value: 'Infra'},
     {name: 'ABC-Gefahren', value: 'CBRNE'},
-    {name: 'Sonstige', value: 'Ohter'},
+    {name: 'Sonstige', value: 'Other'},
   ];
 
   msgTypes = [
