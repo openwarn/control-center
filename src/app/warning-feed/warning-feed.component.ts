@@ -60,8 +60,8 @@ export class WarningFeedComponent implements OnInit, OnDestroy {
           const capAlert = this.capXmlService.convertXmlToCapAlert(alertXml);
           this.items.push(
             {
-              description: 'Testbeschreibung',
-              title: 'Titel',
+              description: capAlert.alertInfos[0].areaDescription,
+              title: capAlert.alertInfos[0].headline,
               warningId: capAlert.alertId
             }
           );

@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CapDeliveryService } from '../cap/cap-delivery.service';
 import { CapXmlService } from '../cap/cap-xml.service';
 import { CapAlert } from '../cap/cap-alert';
+import { AlertInfo } from '../cap/alert-info';
 
 @Component({
   selector: 'app-warning-creator',
@@ -14,8 +15,8 @@ export class WarningCreatorComponent implements OnInit {
 
   alertForm = this.fb.group({
     // metadata
-    senderId: [{value: 'DE-3424234', disabled: false}, Validators.required],
     alertId: [{value: 'DE-W-3223423', disabled: false}, Validators.required],
+    senderId: [{value: 'DE-3424234', disabled: false}, Validators.required],
     scope: ['Public', Validators.required],
     status: ['Actual', Validators.required],
     msgType: ['Alert', Validators.required],
@@ -179,7 +180,26 @@ export class WarningCreatorComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    const capAlert = new CapAlert();
+    const form = this.alertForm.value;
+    const capAlert = CapAlert.builder()
+    .alertId(form.alertId)
+    .senderId(form.senderId)
+    .scope(form.scope)
+    .status(form.status)
+    .msgType(form.msgType)
+    .addInfoBlock(
+      AlertInfo.builder()
+      .headline(form.headline)
+      .language(form.language)
+      .areaDescription(form.areaDesc)
+      .build()
+    )
+    .category(form.category)
+    .urgency(form.urgency)
+    .severity(form.severity)
+    .certainty(form.certainty)
+    .responseType(form.responseType)
+    .build();
     const capXml = this.capXmlSevice.convertCapAlertToXml(capAlert);
     this.capDeliveryService.deliver(capXml).subscribe(
       () => {
