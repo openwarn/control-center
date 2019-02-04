@@ -1,5 +1,7 @@
 export interface InfoInterface {
     language: string;
     headline: string;
-    areaDescription: string;
+    event?: string;
+    description?: string;
+    areaDescription?: string;
 }

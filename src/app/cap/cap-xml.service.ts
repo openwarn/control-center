@@ -4,12 +4,35 @@ import * as xmlConverter from 'xml-js';
 import * as moment from 'moment';
 import { AlertInfo } from './alert-info';
 
+class XmlBranch {
+  private branch: any;
+
+  constructor(branch) {
+    this.branch = branch;
+  }
+
+  text(defaultValue: string): string {
+    if (this.branch && this.branch._text) {
+      return this.branch._text;
+    } else {
+      return defaultValue;
+    }
+  }
+
+  takeFirst() {
+    if (this.branch instanceof Array) {
+      // TODO: support multiple info segments
+      return this.branch[0];
+    } else {
+      return this.branch;
+    }
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CapXmlService {
- // 1995-12-17T02:24:00-00:00
- // 1995-12-17T03:24:00-00:00
 
   private static of(branch: any) {
     return new XmlBranch(branch);
@@ -22,16 +45,50 @@ export class CapXmlService {
   constructor() { }
 
   convertCapAlertToXml(alert: CapAlert): string {
-    const areas = [];
+    const firstInfoBlock: any = {
+      category: {
+        _text: alert.category
+      },
+      urgency: {
+        _text: alert.urgency
+      },
+      severity: {
+        _text: alert.severity
+      },
+      certainty: {
+        _text: alert.certainty
+      },
+      area: []
+    };
 
     if (alert.alertInfos.length > 0) {
-      areas.push(
-        {
-          areaDescr: {
-            _text: alert.alertInfos[0].areaDescription
-          }
-       }
-      );
+      // required
+      firstInfoBlock.language = {
+        _text: alert.alertInfos[0].language
+      };
+      firstInfoBlock.headline = {
+        _text: alert.alertInfos[0].headline
+      };
+      // optionals
+      if (alert.alertInfos[0].areaDescription) {
+        firstInfoBlock.area.push(
+          {
+            areaDesc: {
+              _text: alert.alertInfos[0].areaDescription,
+            }
+        }
+        );
+      }
+      if (alert.alertInfos[0].event) {
+        firstInfoBlock.event = {
+          _text: alert.alertInfos[0].event
+        };
+      }
+      if (alert.alertInfos[0].description) {
+        firstInfoBlock.description = {
+          _text: alert.alertInfos[0].description
+        };
+      }
     }
 
     return xmlConverter.js2xml({
@@ -65,24 +122,7 @@ export class CapXmlService {
           _text: alert.scope
         },
         info: [
-          {
-            category: {
-              _text: alert.category
-            },
-            event: {
-              _text: alert.event
-            },
-            urgency: {
-              _text: alert.urgency
-            },
-            severity: {
-              _text: alert.severity
-            },
-            certainty: {
-              _text: alert.certainty
-            },
-            area: areas
-          }
+          firstInfoBlock
         ]
       }
     }, {
@@ -100,46 +140,26 @@ export class CapXmlService {
     info.language = 'de-DE';
     // xml-js will resolve <info> either as array or as property depending on the number of elements
     const rawInfo = CapXmlService.of(rawAlert.alert.info).takeFirst();
-    info.headline = rawInfo.headline._text;
-    console.log(JSON.stringify(rawInfo));
+    info.headline = CapXmlService.of(rawInfo.headline).text('');
+    info.event = CapXmlService.of(rawInfo.event).text('');
 
     const rawArea = CapXmlService.of(rawInfo.area).takeFirst();
     info.areaDescription = rawArea.areaDesc._text;
 
-    const alert = new CapAlert();
-    alert.alertInfos.push(info);
-    alert.alertId = rawAlert.alert.identifier._text;
-    alert.senderId = rawAlert.alert.sender._text;
-    alert.originatedAt = new Date(rawAlert.alert.sent._text);
-    alert.msgType = rawAlert.alert.msgType._text;
-    alert.status = rawAlert.alert.status._text;
-    alert.scope = rawAlert.alert.scope._text;
+    return CapAlert.builder()
+    .addInfoBlock(info)
+    .alertId(rawAlert.alert.identifier._text)
+    .senderId(rawAlert.alert.sender._text)
+    .originatedAt(new Date(rawAlert.alert.sent._text))
+    .msgType(rawAlert.alert.msgType._text)
+    .status(rawAlert.alert.status._text)
+    .scope(rawAlert.alert.scope._text)
+    .category(rawInfo.category._text)
+    .urgency(rawInfo.urgency._text)
+    .severity(rawInfo.severity._text)
+    .certainty(rawInfo.certainty._text)
+    .build();
 
-    alert.category = rawInfo.category._text;
-    alert.event = rawInfo.event._text;
-    alert.urgency = rawInfo.urgency._text;
-    alert.severity = rawInfo.severity._text;
-    alert.certainty = rawInfo.certainty._text;
-
-    return alert;
   }
 
-}
-
-
-class XmlBranch {
-  private branch: any;
-
-  constructor(branch) {
-    this.branch = branch;
-  }
-
-  takeFirst() {
-    if (this.branch instanceof Array) {
-      // TODO: support multiple info segments
-      return this.branch[0];
-    } else {
-      return this.branch;
-    }
-  }
 }

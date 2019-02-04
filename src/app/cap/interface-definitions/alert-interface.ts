@@ -4,7 +4,6 @@ export interface AlertInterface {
     senderId: string;
     alertId: string;
     scope: string;
-    event: string;
     status: string;
     msgType: string;
     originatedAt: Date;
