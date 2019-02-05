@@ -13,27 +13,6 @@ import { AlertInfo } from '../cap/alert-info';
 })
 export class WarningCreatorComponent implements OnInit {
 
-  alertForm = this.fb.group({
-    // metadata
-    alertId: [{value: 'DE-W-3223423', disabled: false}, Validators.required],
-    senderId: [{value: 'DE-3424234', disabled: false}, Validators.required],
-    scope: ['Public', Validators.required],
-    status: ['Actual', Validators.required],
-    msgType: ['Alert', Validators.required],
-    // warning info
-    language: ['en-US', Validators.required],
-    headline: [
-      null,
-      Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])
-    ],
-    areaDesc: [null, Validators.required],
-    category: ['Met', Validators.required],
-    urgency: ['Unknown', Validators.required],
-    severity: ['Unknown', Validators.required],
-    certainty: ['Unknown', Validators.required],
-    responseType: [null, Validators.required]
-  });
-
   scopes = [
     {name: 'Öffentlich', value: 'Public'},
     {name: 'Beschränkt', value: 'Restricted'},
@@ -173,6 +152,44 @@ export class WarningCreatorComponent implements OnInit {
     }
   ];
 
+
+  private DEFAULTS = {
+    alertId: 'DE-W-3223423',
+    senderId: 'DE-3424234',
+    scope: 'Public',
+    status: 'Actual',
+    msgType: 'Alert',
+    language: 'en-US',
+    headline: null,
+    areaDesc: null,
+    category: this.categories[0].value,
+    urgency: 'Unknown',
+    severity: 'Unknown',
+    certainty: 'Unknown',
+    responseType: null
+  };
+
+  alertForm = this.fb.group({
+    // metadata
+    alertId: [{value: this.DEFAULTS.alertId, disabled: false}, Validators.required],
+    senderId: [{value: this.DEFAULTS.senderId, disabled: false}, Validators.required],
+    scope: [this.DEFAULTS.scope, Validators.required],
+    status: [this.DEFAULTS.status, Validators.required],
+    msgType: [this.DEFAULTS.msgType, Validators.required],
+    // warning info
+    language: [this.DEFAULTS.language, Validators.required],
+    headline: [
+      this.DEFAULTS.headline,
+      Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])
+    ],
+    areaDesc: [this.DEFAULTS.areaDesc, Validators.required],
+    category: [this.DEFAULTS.category, Validators.required],
+    urgency: [this.DEFAULTS.urgency, Validators.required],
+    severity: [this.DEFAULTS.severity, Validators.required],
+    certainty: [this.DEFAULTS.certainty, Validators.required],
+    responseType: [this.DEFAULTS.responseType, Validators.required]
+  });
+
   constructor(
     private fb: FormBuilder,
     private capDeliveryService: CapDeliveryService,
@@ -204,13 +221,17 @@ export class WarningCreatorComponent implements OnInit {
     this.capDeliveryService.deliver(capXml).subscribe(
       () => {
         alert('Warnung wurde erfolgreich versandt!');
-        this.alertForm.reset();
+        this.reset();
       },
       (err) => alert('Es ist ein Fehler aufgetreten, versuchen sie es erneut')
     );
   }
 
   ngOnInit() {
+  }
+
+  reset() {
+    this.alertForm.reset(this.DEFAULTS);
   }
 
 }
