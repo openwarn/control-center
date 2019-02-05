@@ -205,7 +205,6 @@ export class WarningCreatorComponent implements OnInit {
       () => {
         alert('Warnung wurde erfolgreich versandt!');
         this.alertForm.reset();
-        this.alertForm.clearValidators();
       },
       (err) => alert('Es ist ein Fehler aufgetreten, versuchen sie es erneut')
     );
