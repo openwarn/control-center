@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WebsocketListenerService } from './websocket/websocket-listener.service';
 import { CapAlert } from './cap/cap-alert';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { CapXmlService } from './cap/cap-xml.service';
 

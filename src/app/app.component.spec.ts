@@ -2,8 +2,9 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { SiteNavigationComponent } from './site-navigation/site-navigation.component';
-import { MatSidenavModule, MatToolbarModule, MatListModule, MatIconModule } from '@angular/material';
+import { MatSidenavModule, MatToolbarModule, MatListModule, MatIconModule, MatBadgeModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReceivedWarningService } from './received-warning.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -14,12 +15,16 @@ describe('AppComponent', () => {
         MatToolbarModule,
         MatListModule,
         MatIconModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatBadgeModule
       ],
       declarations: [
         AppComponent,
         SiteNavigationComponent
       ],
+      providers: [
+        ReceivedWarningService
+      ]
     }).compileComponents();
   }));
 

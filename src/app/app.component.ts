@@ -11,15 +11,5 @@ import { CapAlert } from './cap/cap-alert';
 export class AppComponent {
   title = 'Kontrollzentrum';
 
-  private receivedWarnings: Observable<CapAlert[]>;
-
-  constructor(private receivedWarningService: ReceivedWarningService) {
-    this.receivedWarnings = receivedWarningService.warnings();
-    this.receivedWarnings.subscribe(
-      (alert) => {
-        console.info('AppComponent: Warning received', alert);
-      },
-      (error) => console.error(error)
-    );
-  }
+  constructor() {}
 }
