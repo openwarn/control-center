@@ -4,6 +4,11 @@ import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HealthStatus } from '../health-status.enum';
 
+class StatusItem {
+  status: Observable<HealthStatus>;
+  name: string;
+}
+
 @Component({
   selector: 'app-health-status-board',
   templateUrl: './health-status-board.component.html',
@@ -11,14 +16,19 @@ import { HealthStatus } from '../health-status.enum';
 })
 export class HealthStatusBoardComponent implements OnInit {
 
-  dummyServiceStatus: Observable<HealthStatus>;
-  nodeDummyServiceStatus: Observable<HealthStatus>;
+  serviceStatus: Array<StatusItem>;
 
   constructor(
     private healthStatusService: HealthStatusService
   ) {
-    this.dummyServiceStatus = this.healthStatusService.service(environment.services.dummy.baseUrl);
-    this.nodeDummyServiceStatus = this.healthStatusService.service(environment.services.dummy.baseUrl);
+    this.serviceStatus = Object.keys(environment.services).map(
+      (serviceName) => {
+        return {
+          status: this.healthStatusService.service(environment.services[serviceName].baseUrl),
+          name: serviceName
+        };
+      }
+    );
   }
 
   ngOnInit() {
