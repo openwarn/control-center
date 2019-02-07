@@ -5,14 +5,8 @@
 export const environment = {
   production: false,
   services: {
-    dummy: {
-      baseUrl: 'http://localhost:5000'
-    },
     warningDistribution: {
       baseUrl: 'http://localhost:9101'
-    },
-    nodeDummy: {
-      baseUrl: 'http://localhost:3000'
     },
     webdisseminator: {
       baseUrl: 'http://localhost:9201'
