@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HealthStatusService } from '../health-status.service';
 import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ReceivedWarningService } from '../received-warning.service';
+import { ReceivedWarningService } from '../cap/received-warning.service';
 
 @Component({
   selector: 'app-site-navigation',

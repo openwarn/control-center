@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { WebsocketListenerService } from './websocket/websocket-listener.service';
-import { CapAlert } from './cap/cap-alert';
+import { WebsocketListenerService } from '../websocket/websocket-listener.service';
+import { CapAlert } from './cap-alert';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../environments/environment';
-import { CapXmlService } from './cap/cap-xml.service';
+import { environment } from '../../environments/environment';
+import { CapXmlService } from './cap-xml.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,6 @@ export class ReceivedWarningService {
   ) {
     this.websocketListenerService.topic(environment.services.webdisseminator.baseUrl, 'alert').subscribe(
       (alertXml) => {
-        console.log('WarningFeedComponent', 'New Alert arrived');
-        console.log('WarningFeedComponent', alertXml);
         try {
           const capAlert = this.capXmlService.convertXmlToCapAlert(alertXml);
           this.receivedWarnings.push(capAlert);

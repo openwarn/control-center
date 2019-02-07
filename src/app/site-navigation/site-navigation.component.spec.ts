@@ -26,7 +26,7 @@ import { WarningFeedComponent } from '../warning-feed/warning-feed.component';
 import { HealthStatusBoardComponent } from '../monitoring/health-status-board/health-status-board.component';
 import { DashboardSpawnerComponent } from '../dashboard-spawner/dashboard-spawner.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ReceivedWarningService } from '../received-warning.service';
+import { ReceivedWarningService } from '../cap/received-warning.service';
 
 describe('SiteNavigationComponent', () => {
   let component: SiteNavigationComponent;

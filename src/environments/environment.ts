@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  broker: {
+    alertTopic: 'alert'
+  },
   services: {
     warningDistribution: {
       baseUrl: 'http://localhost:9101'

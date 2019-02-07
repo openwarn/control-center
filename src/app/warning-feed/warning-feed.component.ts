@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
-import { ReceivedWarningService } from '../received-warning.service';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ReceivedWarningService } from '../cap/received-warning.service';
 import { CapAlert } from '../cap/cap-alert';
 
 @Component({
@@ -15,7 +15,7 @@ export class WarningFeedComponent {
   constructor(
     private receivedWarningService: ReceivedWarningService
   ) {
-    this.items = receivedWarningService.warnings();
+    this.items = this.receivedWarningService.warnings();
   }
 
 

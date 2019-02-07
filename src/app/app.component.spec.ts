@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { SiteNavigationComponent } from './site-navigation/site-navigation.component';
 import { MatSidenavModule, MatToolbarModule, MatListModule, MatIconModule, MatBadgeModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReceivedWarningService } from './received-warning.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -21,9 +20,6 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         SiteNavigationComponent
-      ],
-      providers: [
-        ReceivedWarningService
       ]
     }).compileComponents();
   }));
