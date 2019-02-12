@@ -1,11 +1,38 @@
 <div class="grid-container">
   <h1 class="mat-h1">Aktuelle Warnungen </h1>
 
-  <mat-list-item *ngFor="let item of items | async; last as last">
-    <div mat-line><mat-icon mat-list-icon>warning</mat-icon> {{ item.alertId }}</div>
-    <h4 mat-line>{{ item.alertInfos[0].headline }}</h4>
-    <p mat-line> {{ item.alertInfos[0].areaDescription }} </p>
-    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
- </mat-list-item>
+  <h3>Ausstehend</h3>
+  <mat-accordion>
+      <mat-expansion-panel  *ngFor="let item of pendingItems | async; last as last">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              {{ item.alertInfos[0].headline }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ item.alertId }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p *ngIf="item.alertInfos[0].description">{{ item.alertInfos[0].description }}</p>
+        <p>{{ item.alertInfos[0].areaDescription }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  <h3>Angekommen</h3>
+
+  <mat-accordion>
+    <mat-expansion-panel  *ngFor="let item of items | async; last as last">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ item.alertInfos[0].headline }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ item.alertId }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p *ngIf="item.alertInfos[0].description">{{ item.alertInfos[0].description }}</p>
+      <p>{{ item.alertInfos[0].areaDescription }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+
 
 </div>

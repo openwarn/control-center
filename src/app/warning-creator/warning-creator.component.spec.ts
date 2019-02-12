@@ -15,6 +15,8 @@ import { WarningCreatorComponent } from './warning-creator.component';
 import { CapDeliveryService } from '../cap/cap-delivery.service';
 import { CapXmlService } from '../cap/cap-xml.service';
 import { HttpClientModule } from '@angular/common/http';
+import { PendingWarningService } from '../cap/pending-warning.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WarningCreatorComponent', () => {
   let component: WarningCreatorComponent;
@@ -34,11 +36,13 @@ describe('WarningCreatorComponent', () => {
         MatOptionModule,
         MatFormFieldModule,
         MatListModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         CapDeliveryService,
-        CapXmlService
+        CapXmlService,
+        PendingWarningService
       ]
     })
     .compileComponents();

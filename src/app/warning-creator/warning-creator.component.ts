@@ -5,6 +5,9 @@ import { CapDeliveryService } from '../cap/cap-delivery.service';
 import { CapXmlService } from '../cap/cap-xml.service';
 import { CapAlert } from '../cap/cap-alert';
 import { AlertInfo } from '../cap/alert-info';
+import { Router } from '@angular/router';
+import { PendingWarningService } from '../cap/pending-warning.service';
+import * as uuid from 'uuid/v4';
 
 @Component({
   selector: 'app-warning-creator',
@@ -154,8 +157,8 @@ export class WarningCreatorComponent implements OnInit {
 
 
   private DEFAULTS = {
-    alertId: 'DE-W-3223423',
-    senderId: 'DE-3424234',
+    alertId: '',
+    senderId: 'alerts@tu-ilmenau.de',
     scope: 'Public',
     status: 'Actual',
     msgType: 'Alert',
@@ -193,7 +196,9 @@ export class WarningCreatorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private capDeliveryService: CapDeliveryService,
-    private capXmlSevice: CapXmlService
+    private capXmlSevice: CapXmlService,
+    private pendingWarningService: PendingWarningService,
+    private router: Router
   ) {}
 
   onSubmit() {
@@ -221,13 +226,16 @@ export class WarningCreatorComponent implements OnInit {
     this.capDeliveryService.deliver(capXml).subscribe(
       () => {
         alert('Warnung wurde erfolgreich versandt!');
+        this.pendingWarningService.addWarning(capAlert);
         this.reset();
+        this.router.navigate(['alerts']);
       },
       (err) => alert('Es ist ein Fehler aufgetreten, versuchen sie es erneut')
     );
   }
 
   ngOnInit() {
+    this.alertForm.controls.alertId.setValue('TUI-OWS-' + uuid());
   }
 
   reset() {

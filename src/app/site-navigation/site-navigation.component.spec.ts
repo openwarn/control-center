@@ -14,6 +14,7 @@ import {
   MatOptionModule,
   MatSelectModule,
   MatBadgeModule,
+  MatExpansionModule,
 } from '@angular/material';
 
 import { SiteNavigationComponent } from './site-navigation.component';
@@ -61,7 +62,8 @@ describe('SiteNavigationComponent', () => {
         MatFormFieldModule,
         MatOptionModule,
         MatSelectModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatExpansionModule
       ],
       providers: [
         ReceivedWarningService
