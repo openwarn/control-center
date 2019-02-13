@@ -16,143 +16,76 @@ import * as uuid from 'uuid/v4';
 })
 export class WarningCreatorComponent implements OnInit {
 
+  languages = [
+    { name: 'Deutsch (Deutschland)', value: 'de-DE' },
+    { name: 'English (USA)', value: 'en-US' }
+  ];
+
   scopes = [
-    {name: 'Öffentlich', value: 'Public'},
-    {name: 'Beschränkt', value: 'Restricted'},
-    {name: 'Vertraulich', value: 'Private'}
+    { name: 'Öffentlich', value: 'Public' },
+    { name: 'Beschränkt', value: 'Restricted' },
+    { name: 'Vertraulich', value: 'Private' }
   ];
 
   status = [
-    {name: 'Meldung', value: 'Actual'},
-    {name: 'Entwurf', value: 'Draft'},
-    {name: 'Testmeldung', value: 'Test'}
+    { name: 'Meldung', value: 'Actual' },
+    { name: 'Entwurf', value: 'Draft' },
+    { name: 'Testmeldung', value: 'Test' }
   ];
 
   categories = [
-    {name: 'Geophysisch', value: 'Geo'},
-    {name: 'Meteorologisch', value: 'Met'},
-    {name: 'Allgemein', value: 'Safety'},
-    {name: 'Sicherheit', value: 'Security'},
-    {name: 'Rettung', value: 'Rescue'},
-    {name: 'Feuer', value: 'Fire'},
-    {name: 'Gesundheit', value: 'Health'},
-    {name: 'Umweltbedrohungen', value: 'Env'},
-    {name: 'Transportinfrastruktur', value: 'Transport'},
-    {name: 'Sonstige Infrastruktur', value: 'Infra'},
-    {name: 'ABC-Gefahren', value: 'CBRNE'},
-    {name: 'Sonstige', value: 'Other'},
+    { name: 'Geophysisch', value: 'Geo' },
+    { name: 'Meteorologisch', value: 'Met' },
+    { name: 'Allgemein', value: 'Safety' },
+    { name: 'Sicherheit', value: 'Security' },
+    { name: 'Rettung', value: 'Rescue' },
+    { name: 'Feuer', value: 'Fire' },
+    { name: 'Gesundheit', value: 'Health' },
+    { name: 'Umweltbedrohungen', value: 'Env' },
+    { name: 'Transportinfrastruktur', value: 'Transport' },
+    { name: 'Sonstige Infrastruktur', value: 'Infra' },
+    { name: 'ABC-Gefahren', value: 'CBRNE' },
+    { name: 'Sonstige', value: 'Other' },
   ];
 
   msgTypes = [
-    {name: 'Warnung', value: 'Alert'}
+    { name: 'Warnung', value: 'Alert' }
   ];
 
   urgencies = [
-    {
-      name: 'Unbekannt',
-      value: 'Unknown'
-    },
-    {
-      name: 'Keine Reaktion mehr nötig',
-      value: 'Past'
-    },
-    {
-      name: 'In Zukunft ist eine Reaktion fällig',
-      value: 'Future'
-    },
-    {
-      name: 'Baldige Reaktion nötig',
-      value: 'Expected'
-    },
-    {
-      name: 'Sofortige Reaktion nötig',
-      value: 'Immediate'
-    }
+    { name: 'Unbekannt', value: 'Unknown' },
+    { name: 'Keine Reaktion mehr nötig', value: 'Past' },
+    { name: 'In Zukunft ist eine Reaktion fällig', value: 'Future' },
+    { name: 'Baldige Reaktion nötig', value: 'Expected' },
+    { name: 'Sofortige Reaktion nötig', value: 'Immediate' }
   ];
 
   severities = [
-    {
-      name: 'Unbekannt',
-      value: 'Unknown'
-    },
-    {
-      name: 'Geringer Schaden',
-      value: 'Minor'
-    },
-    {
-      name: 'Möglicherweise gefährlich',
-      value: 'Moderate'
-    },
-    {
-      name: 'Gefährlich',
-      value: 'Severe'
-    },
-    {
-      name: 'Extrem gefährlich',
-      value: 'Observed'
-    }
+    { name: 'Unbekannt', value: 'Unknown' },
+    { name: 'Geringer Schaden', value: 'Minor' },
+    { name: 'Möglicherweise gefährlich', value: 'Moderate'},
+    { name: 'Gefährlich', value: 'Severe'},
+    { name: 'Extrem gefährlich', value: 'Observed'}
   ];
 
   certainties = [
-    {
-      name: 'Unbekannt',
-      value: 'Unknown'
-    },
-    {
-      name: 'Unwahrscheinlich (nahezu 0%)',
-      value: 'Unlikely'
-    },
-    {
-      name: 'Möglich (<= 50%)',
-      value: 'Possible'
-    },
-    {
-      name: 'Wahrscheinlich (> 50%)',
-      value: 'Likely'
-    },
-    {
-      name: 'Bereits aufgetreten',
-      value: 'Observed'
-    }
+    { name: 'Unbekannt', value: 'Unknown' },
+    { name: 'Unwahrscheinlich (nahezu 0%)', value: 'Unlikely' },
+    { name: 'Möglich (<= 50%)', value: 'Possible' },
+    { name: 'Wahrscheinlich (> 50%)', value: 'Likely' },
+    { name: 'Bereits beobachtet', value: 'Observed' }
   ];
 
   responseTypes = [
-    {
-      name: 'Deckung suchen...',
-      value: 'Shelter'
-    },
-    {
-      name: 'Evakuierung...',
-      value: 'Evacuate'
-    },
-    {
-      name: 'Vorbereitungen treffen...',
-      value: 'Prepare'
-    },
-    {
-      name: 'Folgende Aktion durchführen...',
-      value: 'Execute'
-    },
-    {
-      name: 'Vermeiden des Ereignisses indem... ',
-      value: 'Avoid'
-    },
-    {
-      name: 'Achte auf folgende Informationsquellen...',
-      value: 'Monitor'
-    },
-    {
-      name: '(Werte die Informationen dieser Warnung aus)',
-      value: 'Assess'
-    },
-    {
-      name: 'Die Gefahr ist vorüber...',
-      value: 'AllClear'
-    },
-    {
-      name: 'Keine Handlung empfohlen',
-      value: 'None'
-    }
+    { name: 'Deckung suchen...', value: 'Shelter' },
+    { name: 'Evakuierung...', value: 'Evacuate' },
+    { name: 'Vorbereitungen treffen...', value: 'Prepare' },
+    { name: 'Folgende Aktion durchführen...', value: 'Execute' },
+    { name: 'Vermeiden des Ereignisses indem... ', value: 'Avoid' },
+    { name: 'Achte auf folgende Informationsquellen...', value: 'Monitor' },
+    { name: '(Werte die Informationen dieser Warnung aus)', value: 'Assess' },
+    { name: 'Die Gefahr ist vorüber...', value: 'AllClear' },
+    { name: 'Keine Handlung empfohlen', value: 'None' }
   ];
 
 
@@ -162,7 +95,7 @@ export class WarningCreatorComponent implements OnInit {
     scope: 'Public',
     status: 'Actual',
     msgType: 'Alert',
-    language: 'en-US',
+    language: 'de-DE',
     headline: null,
     areaDesc: null,
     category: this.categories[0].value,
@@ -174,8 +107,8 @@ export class WarningCreatorComponent implements OnInit {
 
   alertForm = this.fb.group({
     // metadata
-    alertId: [{value: this.DEFAULTS.alertId, disabled: false}, Validators.required],
-    senderId: [{value: this.DEFAULTS.senderId, disabled: false}, Validators.required],
+    alertId: [{value: this.DEFAULTS.alertId, disabled: true}, Validators.required],
+    senderId: [{value: this.DEFAULTS.senderId, disabled: true}, Validators.required],
     scope: [this.DEFAULTS.scope, Validators.required],
     status: [this.DEFAULTS.status, Validators.required],
     msgType: [this.DEFAULTS.msgType, Validators.required],
