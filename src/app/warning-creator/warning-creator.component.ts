@@ -13,35 +13,40 @@ import { AlertInfo } from '../cap/alert-info';
 })
 export class WarningCreatorComponent implements OnInit {
 
+  languages = [
+    { name: 'Deutsch (Deutschland)', value: 'de-DE' },
+    { name: 'English (USA)', value: 'en-US' }
+  ];
+
   scopes = [
-    {name: 'Öffentlich', value: 'Public'},
-    {name: 'Beschränkt', value: 'Restricted'},
-    {name: 'Vertraulich', value: 'Private'}
+    { name: 'Öffentlich', value: 'Public' },
+    { name: 'Beschränkt', value: 'Restricted' },
+    { name: 'Vertraulich', value: 'Private' }
   ];
 
   status = [
-    {name: 'Meldung', value: 'Actual'},
-    {name: 'Entwurf', value: 'Draft'},
-    {name: 'Testmeldung', value: 'Test'}
+    { name: 'Meldung', value: 'Actual' },
+    { name: 'Entwurf', value: 'Draft' },
+    { name: 'Testmeldung', value: 'Test' }
   ];
 
   categories = [
-    {name: 'Geophysisch', value: 'Geo'},
-    {name: 'Meteorologisch', value: 'Met'},
-    {name: 'Allgemein', value: 'Safety'},
-    {name: 'Sicherheit', value: 'Security'},
-    {name: 'Rettung', value: 'Rescue'},
-    {name: 'Feuer', value: 'Fire'},
-    {name: 'Gesundheit', value: 'Health'},
-    {name: 'Umweltbedrohungen', value: 'Env'},
-    {name: 'Transportinfrastruktur', value: 'Transport'},
-    {name: 'Sonstige Infrastruktur', value: 'Infra'},
-    {name: 'ABC-Gefahren', value: 'CBRNE'},
-    {name: 'Sonstige', value: 'Other'},
+    { name: 'Geophysisch', value: 'Geo' },
+    { name: 'Meteorologisch', value: 'Met' },
+    { name: 'Allgemein', value: 'Safety' },
+    { name: 'Sicherheit', value: 'Security' },
+    { name: 'Rettung', value: 'Rescue' },
+    { name: 'Feuer', value: 'Fire' },
+    { name: 'Gesundheit', value: 'Health' },
+    { name: 'Umweltbedrohungen', value: 'Env' },
+    { name: 'Transportinfrastruktur', value: 'Transport' },
+    { name: 'Sonstige Infrastruktur', value: 'Infra' },
+    { name: 'ABC-Gefahren', value: 'CBRNE' },
+    { name: 'Sonstige', value: 'Other' },
   ];
 
   msgTypes = [
-    {name: 'Warnung', value: 'Alert'}
+    { name: 'Warnung', value: 'Alert' }
   ];
 
   urgencies = [
@@ -87,7 +92,7 @@ export class WarningCreatorComponent implements OnInit {
     scope: 'Public',
     status: 'Actual',
     msgType: 'Alert',
-    language: 'en-US',
+    language: 'de-DE',
     headline: null,
     areaDesc: null,
     category: this.categories[0].value,
