@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapDeliveryService } from '../cap/cap-delivery.service';
@@ -14,7 +14,7 @@ import * as uuid from 'uuid/v4';
   templateUrl: './warning-creator.component.html',
   styleUrls: ['./warning-creator.component.scss']
 })
-export class WarningCreatorComponent implements OnInit {
+export class WarningCreatorComponent {
 
   languages = [
     { name: 'Deutsch (Deutschland)', value: 'de-DE' },
@@ -90,7 +90,7 @@ export class WarningCreatorComponent implements OnInit {
 
 
   private DEFAULTS = {
-    alertId: '',
+    alertId: 'TUI-OWS-' + uuid(),
     senderId: 'alerts@tu-ilmenau.de',
     scope: 'Public',
     status: 'Actual',
@@ -107,8 +107,8 @@ export class WarningCreatorComponent implements OnInit {
 
   alertForm = this.fb.group({
     // metadata
-    alertId: [{value: this.DEFAULTS.alertId, disabled: true}, Validators.required],
-    senderId: [{value: this.DEFAULTS.senderId, disabled: true}, Validators.required],
+    alertId: [{value: this.DEFAULTS.alertId, disabled: false}, Validators.required],
+    senderId: [{value: this.DEFAULTS.senderId, disabled: false}, Validators.required],
     scope: [this.DEFAULTS.scope, Validators.required],
     status: [this.DEFAULTS.status, Validators.required],
     msgType: [this.DEFAULTS.msgType, Validators.required],
@@ -165,10 +165,6 @@ export class WarningCreatorComponent implements OnInit {
       },
       (err) => alert('Es ist ein Fehler aufgetreten, versuchen sie es erneut')
     );
-  }
-
-  ngOnInit() {
-    this.alertForm.controls.alertId.setValue('TUI-OWS-' + uuid());
   }
 
   reset() {
