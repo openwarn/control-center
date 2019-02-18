@@ -4,6 +4,8 @@ import { CapDeliveryService } from './cap-delivery.service';
 import { CapXmlService } from './cap-xml.service';
 import { ReceivedWarningService } from './received-warning.service';
 import { WebsocketModule } from '../websocket/websocket.module';
+import { PendingWarningService } from './pending-warning.service';
+import { AlertListenerService } from './alert-listener.service';
 
 @NgModule({
   declarations: [],
@@ -14,7 +16,9 @@ import { WebsocketModule } from '../websocket/websocket.module';
   providers: [
     CapDeliveryService,
     CapXmlService,
-    ReceivedWarningService
+    ReceivedWarningService,
+    AlertListenerService,
+    PendingWarningService
   ]
 })
 export class CapModule { }

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WarningFeedComponent } from './warning-feed.component';
-import { MatListModule, MatIconModule } from '@angular/material';
+import { MatListModule, MatIconModule, MatExpansionModule } from '@angular/material';
 
 describe('WarningFeedComponent', () => {
   let component: WarningFeedComponent;
@@ -12,7 +12,8 @@ describe('WarningFeedComponent', () => {
       declarations: [ WarningFeedComponent ],
       imports: [
         MatListModule,
-        MatIconModule
+        MatIconModule,
+        MatExpansionModule
       ]
     })
     .compileComponents();

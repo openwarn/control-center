@@ -141,6 +141,7 @@ export class CapXmlService {
     // xml-js will resolve <info> either as array or as property depending on the number of elements
     const rawInfo = CapXmlService.of(rawAlert.alert.info).takeFirst();
     info.headline = CapXmlService.of(rawInfo.headline).text('');
+    info.description = CapXmlService.of(rawInfo.description).text('');
     info.event = CapXmlService.of(rawInfo.event).text('');
 
     const rawArea = CapXmlService.of(rawInfo.area).takeFirst();

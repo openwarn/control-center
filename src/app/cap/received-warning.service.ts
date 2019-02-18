@@ -4,6 +4,7 @@ import { CapAlert } from './cap-alert';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CapXmlService } from './cap-xml.service';
+import { AlertListenerService } from './alert-listener.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +14,17 @@ export class ReceivedWarningService {
   private $warnings:  BehaviorSubject<CapAlert[]> = new BehaviorSubject<CapAlert[]>([]);
 
   constructor(
-    private websocketListenerService: WebsocketListenerService,
-    private capXmlService: CapXmlService
+    private alertListenerService: AlertListenerService
   ) {
-    this.websocketListenerService.topic(environment.services.webdisseminator.baseUrl, 'alert').subscribe(
-      (alertXml) => {
-        try {
-          const capAlert = this.capXmlService.convertXmlToCapAlert(alertXml);
-          this.receivedWarnings.push(capAlert);
-          this.$warnings.next(this.receivedWarnings);
-        } catch (error) {
-          console.error('WarningFeedComponent', 'Could not convert cap xml', error);
-        }
-      });
+    this.alertListenerService.alert().subscribe(
+      (alert) => {
+        this.receivedWarnings.push(alert);
+        this.$warnings.next(this.receivedWarnings);
+      },
+      (error: any) => {
+        console.error('ReceivedWarningService', 'Failed to receive alert', error);
+      }
+    );
   }
 
   warnings(): Observable<CapAlert[]> {

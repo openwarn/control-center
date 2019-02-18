@@ -15,9 +15,7 @@ const testXml = `<?xml version = "1.0" encoding = "UTF-8"?>
     <certainty>Observed</certainty>
     <senderName>Southern California Seismic Network (TriNet) operated by Caltech and USGS</senderName>
     <headline>Some Earthquake Headline</headline>
-    <description>A minor earthquake measuring 3.4 on the Richter scale
-    occurred near Brawley, California at 8:30 PM Pacific Daylight Time on Wednesday,
-    June 11, 2003. (This event has now been reviewed by a seismologist)</description>
+    <description>A minor earthquake measuring 3.4 on the Richter scale</description>
     <web>http://www.trinet.org/scsn/scsn.html</web>
     <parameter>
       <valueName>EventID</valueName>

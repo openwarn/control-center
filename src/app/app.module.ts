@@ -13,7 +13,8 @@ import {
   MatInputModule,
   MatSelectModule,
   MatRadioModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatExpansionModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -56,7 +57,8 @@ import { LevelSliderModule } from './level-slider/level-slider.module';
     MatRadioModule,
     ReactiveFormsModule,
     MatBadgeModule,
-    LevelSliderModule
+    LevelSliderModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
