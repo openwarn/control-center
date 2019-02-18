@@ -44,6 +44,7 @@ describe('CapXmlService', () => {
       expect(capAlert.urgency).toBe('Past');
 
       expect(capAlert.alertInfos[0].headline).toBe('Some Earthquake Headline');
+      expect(capAlert.alertInfos[0].description).toBe('A minor earthquake measuring 3.4 on the Richter scale');
       expect(capAlert.alertInfos[0].areaDescription).toBe('Some Area');
       expect(capAlert.alertInfos[0].event).toBe('Earthquake');
     });
