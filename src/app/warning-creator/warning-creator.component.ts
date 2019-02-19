@@ -90,8 +90,8 @@ export class WarningCreatorComponent {
 
 
   private DEFAULTS = {
-    alertId: 'TUI-OWS-' + uuid(),
-    senderId: 'alerts@tu-ilmenau.de',
+    alertId: 'EXAMPLE-OWS-' + uuid(),
+    senderId: 'alerts@example.org',
     scope: 'Public',
     status: 'Actual',
     msgType: 'Alert',
