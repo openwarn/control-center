@@ -36,7 +36,7 @@ describe('CapXmlService', () => {
       const service: CapXmlService = TestBed.get(CapXmlService);
       const capAlert = service.convertXmlToCapAlert(getSampleEarthquakeAlertCapXML());
 
-      expect(capAlert.alertId).toBe('TRI13970876.7');
+      expect(capAlert.alertId).toBe('EQ-EXA-1234');
       expect(capAlert.msgType).toBe('Update');
       expect(capAlert.category).toBe('Geo');
       expect(capAlert.certainty).toBe('Observed');
@@ -61,6 +61,10 @@ describe('CapXmlService', () => {
 
       expect(capAlert.alertInfos[0].headline).toBe('Amber Alert in Los Angeles County');
       expect(capAlert.alertInfos[0].areaDescription).toBe('Los Angeles County');
+      expect(capAlert.alertInfos[0].language).toBe('en-US');
+
+      expect(capAlert.alertInfos.length).toBe(2);
+      expect(capAlert.alertInfos[1].language).toBe('es-US');
     });
 
     it('should should tolerate a missing headline', ()  => {

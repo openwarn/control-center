@@ -11,7 +11,7 @@ class XmlBranch {
     this.branch = branch;
   }
 
-  text(defaultValue: string): string {
+  textOrDefault(defaultValue: string): string {
     if (this.branch && this.branch._text) {
       return this.branch._text;
     } else {
@@ -21,10 +21,17 @@ class XmlBranch {
 
   takeFirst() {
     if (this.branch instanceof Array) {
-      // TODO: support multiple info segments
       return this.branch[0];
     } else {
       return this.branch;
+    }
+  }
+
+  asArray() {
+    if (this.branch instanceof Array) {
+      return this.branch;
+    } else {
+      return [this.branch];
     }
   }
 }
@@ -131,34 +138,37 @@ export class CapXmlService {
   }
 
   convertXmlToCapAlert(xml: string): CapAlert {
+    const alertBuilder = CapAlert.builder();
+
     const rawAlert: any = xmlConverter.xml2js(xml, {
       compact: true
     });
-    console.log('xml alert as js object', xmlConverter.xml2json(xml, {compact: true }));
+    const firstRawInfo = CapXmlService.of(rawAlert.alert.info).takeFirst();
 
-    const info = new AlertInfo();
-    info.language = 'de-DE';
-    // xml-js will resolve <info> either as array or as property depending on the number of elements
-    const rawInfo = CapXmlService.of(rawAlert.alert.info).takeFirst();
-    info.headline = CapXmlService.of(rawInfo.headline).text('');
-    info.description = CapXmlService.of(rawInfo.description).text('');
-    info.event = CapXmlService.of(rawInfo.event).text('');
+    CapXmlService.of(rawAlert.alert.info).asArray().forEach(
+      (rawInfo) => {
+        const info = new AlertInfo();
+        info.headline = CapXmlService.of(rawInfo.headline).textOrDefault('');
+        info.description = CapXmlService.of(rawInfo.description).textOrDefault('');
+        info.event = CapXmlService.of(rawInfo.event).textOrDefault('');
+        info.language = CapXmlService.of(rawInfo.language).textOrDefault('en-US');
+        const rawArea = CapXmlService.of(rawInfo.area).takeFirst();
+        info.areaDescription = rawArea.areaDesc._text;
+        alertBuilder.addInfoBlock(info);
+      }
+    );
 
-    const rawArea = CapXmlService.of(rawInfo.area).takeFirst();
-    info.areaDescription = rawArea.areaDesc._text;
-
-    return CapAlert.builder()
-    .addInfoBlock(info)
+    return alertBuilder
     .alertId(rawAlert.alert.identifier._text)
     .senderId(rawAlert.alert.sender._text)
     .originatedAt(new Date(rawAlert.alert.sent._text))
     .msgType(rawAlert.alert.msgType._text)
     .status(rawAlert.alert.status._text)
     .scope(rawAlert.alert.scope._text)
-    .category(rawInfo.category._text)
-    .urgency(rawInfo.urgency._text)
-    .severity(rawInfo.severity._text)
-    .certainty(rawInfo.certainty._text)
+    .category(firstRawInfo.category._text)
+    .urgency(CapXmlService.of(firstRawInfo.urgency).textOrDefault('Unknown'))
+    .severity(CapXmlService.of(firstRawInfo.severity).textOrDefault('Unknown'))
+    .certainty(CapXmlService.of(firstRawInfo.certainty).textOrDefault('Unknown'))
     .build();
 
   }
