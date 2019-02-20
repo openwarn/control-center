@@ -3,7 +3,7 @@
 
   <h3>Ausstehend</h3>
   <mat-accordion>
-      <mat-expansion-panel  *ngFor="let item of pendingItems | async; last as last">
+      <mat-expansion-panel  *ngFor="let item of pendingItems | async">
         <mat-expansion-panel-header>
           <mat-panel-title>
               {{ item.alertInfos[0].headline }}
@@ -13,6 +13,8 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p>Datum: {{ moment(item.originatedAt).calendar() }}</p>
+        <p>Meldungstyp: {{ item.msgType }}</p>
+        <p>Status: {{ item.status }}</p>
         <p>Kategorie: {{ item.category }}</p>
         <p *ngIf="item.alertInfos[0].description">Beschreibung: {{ item.alertInfos[0].description }}</p>
         <p>Ortsbeschreibung: {{ item.alertInfos[0].areaDescription }}</p>
@@ -21,7 +23,7 @@
 
   <h3>Empfangene Meldungen</h3>
   <mat-accordion>
-    <mat-expansion-panel  *ngFor="let item of items | async; last as last">
+    <mat-expansion-panel  *ngFor="let item of items | async">
       <mat-expansion-panel-header>
         <mat-panel-title>
             {{ item.alertInfos[0].headline }}
@@ -31,6 +33,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <p>Datum: {{ moment(item.originatedAt).calendar() }}</p>
+      <p>Meldungstyp: {{ item.msgType }}</p>
+      <p>Status: {{ item.status }}</p>
       <p>Kategorie: {{ item.category }}</p>
       <p *ngIf="item.alertInfos[0].description">Beschreibung: {{ item.alertInfos[0].description }}</p>
       <p>Ortsbeschreibung: {{ item.alertInfos[0].areaDescription }}</p>
