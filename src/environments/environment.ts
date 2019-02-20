@@ -4,6 +4,11 @@
 
 export const environment = {
   production: false,
+  locale: 'de',
+  preferedLanguages: [
+    'de',
+    'en'
+  ],
   broker: {
     alertTopic: 'alert'
   },

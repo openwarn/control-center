@@ -9,11 +9,13 @@
               {{ item.alertInfos[0].headline }}
           </mat-panel-title>
           <mat-panel-description>
-            {{ item.alertId }}
+            {{ item.alertId }} von {{ item.senderId }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p *ngIf="item.alertInfos[0].description">{{ item.alertInfos[0].description }}</p>
-        <p>{{ item.alertInfos[0].areaDescription }}</p>
+        <p>Datum: {{ moment(item.originatedAt).calendar() }}</p>
+        <p>Kategorie: {{ item.category }}</p>
+        <p *ngIf="item.alertInfos[0].description">Beschreibung: {{ item.alertInfos[0].description }}</p>
+        <p>Ortsbeschreibung: {{ item.alertInfos[0].areaDescription }}</p>
       </mat-expansion-panel>
     </mat-accordion>
 

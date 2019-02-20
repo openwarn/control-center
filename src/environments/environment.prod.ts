@@ -1,7 +1,12 @@
 export const environment = {
   production: true,
+  locale: 'de',
+  preferedLanguages: [
+    'de',
+    'en'
+  ],
   broker: {
-    alertTopic: 'alert'
+    alertTopic: 'alert',
   },
   services: {
     warningDistribution: {
