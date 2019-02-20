@@ -1,25 +1,25 @@
 const testXml = `<?xml version = "1.0" encoding = "UTF-8"?>
 <alert xmlns = "urn:oasis:names:tc:emergency:cap:1.2">
-  <identifier>TRI13970876.7</identifier>
-  <sender>trinet@caltech.edu</sender>
+  <identifier>EQ-EXA-1234</identifier>
+  <sender>eq-alerts@example.org</sender>
   <sent>2003-06-11T20:56:00-07:00</sent>
   <status>Actual</status>
   <msgType>Update</msgType>
   <scope>Public</scope>
-  <references>trinet@caltech.edu,TRI13970876.1,2003-06-11T20:30:00-07:00</references>
+  <references>eq-alerts@example.org</references>
   <info>
     <category>Geo</category>
     <event>Earthquake</event>
     <urgency>Past</urgency>
     <severity>Minor</severity>
     <certainty>Observed</certainty>
-    <senderName>Southern California Seismic Network (TriNet) operated by Caltech and USGS</senderName>
+    <senderName>Example Network for Earthquakes</senderName>
     <headline>Some Earthquake Headline</headline>
     <description>A minor earthquake measuring 3.4 on the Richter scale</description>
-    <web>http://www.trinet.org/scsn/scsn.html</web>
+    <web>http://www.example.org/alerts/EQ-EXA-1234</web>
     <parameter>
       <valueName>EventID</valueName>
-      <value>13970876</value>
+      <value>12345</value>
     </parameter>
     <parameter>
       <valueName>Version</valueName>
