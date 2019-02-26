@@ -138,6 +138,7 @@ export class WarningCreatorComponent {
     const form = this.alertForm.value;
     const capAlert = CapAlert.builder()
     .alertId(form.alertId)
+    .originatedAt(new Date())
     .senderId(form.senderId)
     .scope(form.scope)
     .status(form.status)
