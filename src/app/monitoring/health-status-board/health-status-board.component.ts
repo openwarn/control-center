@@ -25,7 +25,7 @@ export class HealthStatusBoardComponent implements OnInit {
       (serviceName) => {
         return {
           status: this.healthStatusService.service(environment.services[serviceName].baseUrl),
-          name: serviceName
+          name: environment.services[serviceName].title
         };
       }
     );

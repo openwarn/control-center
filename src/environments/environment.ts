@@ -14,10 +14,12 @@ export const environment = {
   },
   services: {
     warningDistribution: {
-      baseUrl: 'http://localhost:9101'
+      baseUrl: 'http://localhost:9101',
+      title: 'Warnmeldungsbelieferung'
     },
     webdisseminator: {
-      baseUrl: 'http://localhost:9201'
+      baseUrl: 'http://localhost:9201',
+      title: 'Websocket-Warnmeldungsempfang'
     }
   }
 };
