@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import * as earthquakeCap from './resources/test/earthquake.cap.xml';
 import * as amberCap from './resources/test/amber.cap.xml';
 import * as noHeadlineCap from './resources/test/no-headline.cap.xml';
+import * as errorAlertCap from './resources/test/error.cap.xml';
 
 describe('CapXmlService', () => {
   let capXmlService: CapXmlMapper;
@@ -74,6 +75,14 @@ describe('CapXmlService', () => {
       expect(capAlert).toBeTruthy();
     });
 
+    it('should should map error cap', ()  => {
+      const service: CapXmlMapper = TestBed.get(CapXmlMapper);
+      const capAlert = service.convertXmlToCapAlert(getErrorAlert());
+
+      expect(capAlert).toBeTruthy();
+      expect(capAlert.msgType).toEqual('Error');
+      expect(capAlert.note).toEqual('some error description');
+    });
 
   });
 
@@ -146,4 +155,8 @@ function getSampleEarthquakeAlertCapXML() {
 
 function getAlertWithoutHeadline() {
   return noHeadlineCap.default;
+}
+
+function getErrorAlert() {
+  return errorAlertCap.default;
 }

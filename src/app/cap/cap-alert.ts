@@ -8,6 +8,7 @@ export class CapAlert implements AlertInterface {
     public scope: string;
     public status: string;
     public msgType: string;
+    public note: string;
     public originatedAt: Date;
     public category: string;
     public urgency: string;
@@ -54,6 +55,11 @@ class CapAlertBuilder {
 
     msgType(type: string) {
         this.alert.msgType = type;
+        return this;
+    }
+
+    note(note: string) {
+        this.alert.note = note;
         return this;
     }
 

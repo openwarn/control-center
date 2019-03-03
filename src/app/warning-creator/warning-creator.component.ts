@@ -30,7 +30,8 @@ export class WarningCreatorComponent {
   status = [
     { name: 'Meldung', value: 'Actual' },
     { name: 'Entwurf', value: 'Draft' },
-    { name: 'Testmeldung', value: 'Test' }
+    { name: 'Testmeldung', value: 'Test' },
+    { name: 'Systemmeldung', value: 'System' }
   ];
 
   categories = [
@@ -164,8 +165,14 @@ export class WarningCreatorComponent {
     .build();
     const capXml = this.capXmlSevice.convertCapAlertToXml(capAlert);
     this.capDeliveryService.deliver(capXml).subscribe(
-      () => {
-        alert('Warnung wurde erfolgreich versandt!');
+      (capResponse) => {
+        const ackAlert = this.capXmlSevice.convertXmlToCapAlert(capResponse);
+        if (ackAlert.msgType === 'Error') {
+          alert('Meldung wurde abgelehnt. Grund: ' + ackAlert.note);
+          return;
+        }
+
+        alert('Warnung wurde erfolgreich vom System angenommen!');
         this.pendingWarningService.addWarning(capAlert);
         this.reset();
         this.router.navigate(['alerts']);

@@ -19,6 +19,14 @@ class XmlBranch {
     }
   }
 
+  textOrUndefined(): string {
+    if (this.branch && this.branch._text) {
+      return this.branch._text;
+    } else {
+      return undefined;
+    }
+  }
+
   takeFirst() {
     if (this.branch instanceof Array) {
       return this.branch[0];
@@ -143,33 +151,42 @@ export class CapXmlMapper {
     const rawAlert: any = xmlConverter.xml2js(xml, {
       compact: true
     });
-    const firstRawInfo = CapXmlMapper.of(rawAlert.alert.info).takeFirst();
 
-    CapXmlMapper.of(rawAlert.alert.info).asArray().forEach(
-      (rawInfo) => {
-        const info = new AlertInfo();
-        info.headline = CapXmlMapper.of(rawInfo.headline).textOrDefault('');
-        info.description = CapXmlMapper.of(rawInfo.description).textOrDefault('');
-        info.event = CapXmlMapper.of(rawInfo.event).textOrDefault('');
-        info.language = CapXmlMapper.of(rawInfo.language).textOrDefault('en-US');
-        const rawArea = CapXmlMapper.of(rawInfo.area).takeFirst();
-        info.areaDescription = rawArea.areaDesc._text;
-        alertBuilder.addInfoBlock(info);
-      }
-    );
-
-    return alertBuilder
+    // Browse through root alert element
+    alertBuilder
     .alertId(rawAlert.alert.identifier._text)
     .senderId(rawAlert.alert.sender._text)
     .originatedAt(new Date(rawAlert.alert.sent._text))
     .msgType(rawAlert.alert.msgType._text)
     .status(rawAlert.alert.status._text)
     .scope(rawAlert.alert.scope._text)
-    .category(firstRawInfo.category._text)
-    .urgency(CapXmlMapper.of(firstRawInfo.urgency).textOrDefault('Unknown'))
-    .severity(CapXmlMapper.of(firstRawInfo.severity).textOrDefault('Unknown'))
-    .certainty(CapXmlMapper.of(firstRawInfo.certainty).textOrDefault('Unknown'))
-    .build();
+    .note(CapXmlMapper.of(rawAlert.alert.note).textOrUndefined());
+
+    // Browse through info elements
+    const firstRawInfo = CapXmlMapper.of(rawAlert.alert.info).takeFirst();
+
+    if (firstRawInfo) {
+      alertBuilder
+      .category(firstRawInfo.category._text)
+      .urgency(CapXmlMapper.of(firstRawInfo.urgency).textOrDefault('Unknown'))
+      .severity(CapXmlMapper.of(firstRawInfo.severity).textOrDefault('Unknown'))
+      .certainty(CapXmlMapper.of(firstRawInfo.certainty).textOrDefault('Unknown'));
+
+      CapXmlMapper.of(rawAlert.alert.info).asArray().forEach(
+        (rawInfo) => {
+          const info = new AlertInfo();
+          info.headline = CapXmlMapper.of(rawInfo.headline).textOrDefault('');
+          info.description = CapXmlMapper.of(rawInfo.description).textOrDefault('');
+          info.event = CapXmlMapper.of(rawInfo.event).textOrDefault('');
+          info.language = CapXmlMapper.of(rawInfo.language).textOrDefault('en-US');
+          const rawArea = CapXmlMapper.of(rawInfo.area).takeFirst();
+          info.areaDescription = rawArea.areaDesc._text;
+          alertBuilder.addInfoBlock(info);
+        }
+      );
+    }
+
+    return alertBuilder.build();
 
   }
 
