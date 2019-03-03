@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CapXmlService } from './cap-xml.service';
+import { CapXmlMapper } from './cap-xml.mapper';
 import { CapAlert } from './cap-alert';
 import { AlertInfo } from './alert-info';
 import * as moment from 'moment';
@@ -9,10 +9,10 @@ import * as amberCap from './resources/test/amber.cap.xml';
 import * as noHeadlineCap from './resources/test/no-headline.cap.xml';
 
 describe('CapXmlService', () => {
-  let capXmlService: CapXmlService;
+  let capXmlService: CapXmlMapper;
 
    beforeEach(() => {
-      capXmlService = new CapXmlService();
+      capXmlService = new CapXmlMapper();
    });
 
   it('should be created', () => {
@@ -33,7 +33,7 @@ describe('CapXmlService', () => {
   describe('XML to CapAlert conversion', () => {
 
     it('should convert sample monolingual xml earthquake alert file to CapAlert', () => {
-      const service: CapXmlService = TestBed.get(CapXmlService);
+      const service: CapXmlMapper = TestBed.get(CapXmlMapper);
       const capAlert = service.convertXmlToCapAlert(getSampleEarthquakeAlertCapXML());
 
       expect(capAlert.alertId).toBe('EQ-EXA-1234');
@@ -50,7 +50,7 @@ describe('CapXmlService', () => {
     });
 
     it('should convert sample multilingual xml amber alert file to CapAlert', () => {
-      const service: CapXmlService = TestBed.get(CapXmlService);
+      const service: CapXmlMapper = TestBed.get(CapXmlMapper);
       const capAlert = service.convertXmlToCapAlert(getSampleMultilingualAmberAlertCapXML());
 
       expect(capAlert.alertId).toBe('XYZ-3243-LM');
@@ -68,7 +68,7 @@ describe('CapXmlService', () => {
     });
 
     it('should should tolerate a missing headline', ()  => {
-      const service: CapXmlService = TestBed.get(CapXmlService);
+      const service: CapXmlMapper = TestBed.get(CapXmlMapper);
       const capAlert = service.convertXmlToCapAlert(getAlertWithoutHeadline());
 
       expect(capAlert).toBeTruthy();

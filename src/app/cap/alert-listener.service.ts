@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { CapAlert } from './cap-alert';
 import { WebsocketListenerService } from '../websocket/websocket-listener.service';
-import { CapXmlService } from './cap-xml.service';
+import { CapXmlMapper } from './cap-xml.mapper';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AlertListenerService {
 
   constructor(
     private websocketListenerService: WebsocketListenerService,
-    private capXmlService: CapXmlService
+    private capXmlService: CapXmlMapper
   ) {
     this.websocketListenerService.topic(environment.services.webdisseminator.baseUrl, 'alert').subscribe(
       (alertXml) => {

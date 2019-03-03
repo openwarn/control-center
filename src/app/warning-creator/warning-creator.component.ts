@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapDeliveryService } from '../cap/cap-delivery.service';
-import { CapXmlService } from '../cap/cap-xml.service';
+import { CapXmlMapper } from '../cap/cap-xml.mapper';
 import { CapAlert } from '../cap/cap-alert';
 import { AlertInfo } from '../cap/alert-info';
 import { Router } from '@angular/router';
@@ -134,7 +134,7 @@ export class WarningCreatorComponent {
   constructor(
     private fb: FormBuilder,
     private capDeliveryService: CapDeliveryService,
-    private capXmlSevice: CapXmlService,
+    private capXmlSevice: CapXmlMapper,
     private pendingWarningService: PendingWarningService,
     private router: Router
   ) {}

@@ -39,7 +39,7 @@ class XmlBranch {
 @Injectable({
   providedIn: 'root'
 })
-export class CapXmlService {
+export class CapXmlMapper {
 
   private static of(branch: any) {
     return new XmlBranch(branch);
@@ -117,7 +117,7 @@ export class CapXmlService {
         },
         sent: {
           // use UTC-00:00 as default time zone
-          _text: CapXmlService.formatDateTime(alert.originatedAt)
+          _text: CapXmlMapper.formatDateTime(alert.originatedAt)
         },
         msgType: {
           _text: alert.msgType
@@ -143,16 +143,16 @@ export class CapXmlService {
     const rawAlert: any = xmlConverter.xml2js(xml, {
       compact: true
     });
-    const firstRawInfo = CapXmlService.of(rawAlert.alert.info).takeFirst();
+    const firstRawInfo = CapXmlMapper.of(rawAlert.alert.info).takeFirst();
 
-    CapXmlService.of(rawAlert.alert.info).asArray().forEach(
+    CapXmlMapper.of(rawAlert.alert.info).asArray().forEach(
       (rawInfo) => {
         const info = new AlertInfo();
-        info.headline = CapXmlService.of(rawInfo.headline).textOrDefault('');
-        info.description = CapXmlService.of(rawInfo.description).textOrDefault('');
-        info.event = CapXmlService.of(rawInfo.event).textOrDefault('');
-        info.language = CapXmlService.of(rawInfo.language).textOrDefault('en-US');
-        const rawArea = CapXmlService.of(rawInfo.area).takeFirst();
+        info.headline = CapXmlMapper.of(rawInfo.headline).textOrDefault('');
+        info.description = CapXmlMapper.of(rawInfo.description).textOrDefault('');
+        info.event = CapXmlMapper.of(rawInfo.event).textOrDefault('');
+        info.language = CapXmlMapper.of(rawInfo.language).textOrDefault('en-US');
+        const rawArea = CapXmlMapper.of(rawInfo.area).takeFirst();
         info.areaDescription = rawArea.areaDesc._text;
         alertBuilder.addInfoBlock(info);
       }
@@ -166,9 +166,9 @@ export class CapXmlService {
     .status(rawAlert.alert.status._text)
     .scope(rawAlert.alert.scope._text)
     .category(firstRawInfo.category._text)
-    .urgency(CapXmlService.of(firstRawInfo.urgency).textOrDefault('Unknown'))
-    .severity(CapXmlService.of(firstRawInfo.severity).textOrDefault('Unknown'))
-    .certainty(CapXmlService.of(firstRawInfo.certainty).textOrDefault('Unknown'))
+    .urgency(CapXmlMapper.of(firstRawInfo.urgency).textOrDefault('Unknown'))
+    .severity(CapXmlMapper.of(firstRawInfo.severity).textOrDefault('Unknown'))
+    .certainty(CapXmlMapper.of(firstRawInfo.certainty).textOrDefault('Unknown'))
     .build();
 
   }

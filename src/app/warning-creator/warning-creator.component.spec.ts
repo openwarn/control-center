@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 import { WarningCreatorComponent } from './warning-creator.component';
 import { CapDeliveryService } from '../cap/cap-delivery.service';
-import { CapXmlService } from '../cap/cap-xml.service';
+import { CapXmlMapper } from '../cap/cap-xml.mapper';
 import { HttpClientModule } from '@angular/common/http';
 import { PendingWarningService } from '../cap/pending-warning.service';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -41,7 +41,7 @@ describe('WarningCreatorComponent', () => {
       ],
       providers: [
         CapDeliveryService,
-        CapXmlService,
+        CapXmlMapper,
         PendingWarningService
       ]
     })
