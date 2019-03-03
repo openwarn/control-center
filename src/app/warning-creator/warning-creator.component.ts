@@ -96,6 +96,7 @@ export class WarningCreatorComponent {
     status: 'Actual',
     msgType: 'Alert',
     language: 'de-DE',
+    description: null,
     headline: null,
     areaDesc: null,
     category: this.categories[0].value,
@@ -116,7 +117,11 @@ export class WarningCreatorComponent {
     language: [this.DEFAULTS.language, Validators.required],
     headline: [
       this.DEFAULTS.headline,
-      Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])
+      Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(100)])
+    ],
+    description: [
+      this.DEFAULTS.description,
+      Validators.compose([Validators.required, Validators.minLength(20), Validators.maxLength(200)])
     ],
     areaDesc: [this.DEFAULTS.areaDesc, Validators.required],
     category: [this.DEFAULTS.category, Validators.required],
@@ -146,6 +151,7 @@ export class WarningCreatorComponent {
     .addInfoBlock(
       AlertInfo.builder()
       .headline(form.headline)
+      .description(form.description)
       .language(form.language)
       .areaDescription(form.areaDesc)
       .build()

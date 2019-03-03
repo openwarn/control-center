@@ -35,6 +35,11 @@ class AlertInfoBuilder {
         return this;
     }
 
+    description(description: string) {
+        this.alertInfo.description = description;
+        return this;
+    }
+
     areaDescription(areaDescription: string) {
         this.alertInfo.areaDescription = areaDescription;
         return this;
