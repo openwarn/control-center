@@ -20,12 +20,12 @@ export class CapAlert implements AlertInterface {
         this.alertInfos = [];
     }
 
-    static builder(): AlertBuilder {
-        return new AlertBuilder();
+    static builder(): CapAlertBuilder {
+        return new CapAlertBuilder();
     }
 }
 
-class AlertBuilder {
+class CapAlertBuilder {
     private alert: CapAlert;
 
     constructor() {
