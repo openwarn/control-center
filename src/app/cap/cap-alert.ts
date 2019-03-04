@@ -15,6 +15,7 @@ export class CapAlert implements AlertInterface {
     public severity: string;
     public certainty: string;
     public responseType: string;
+    public eventType: string;
     public alertInfos: Array<AlertInfo>;
 
     constructor() {
@@ -90,6 +91,11 @@ class CapAlertBuilder {
 
     responseType(responseType: string) {
         this.alert.responseType = responseType;
+        return this;
+    }
+
+    eventType(eventType: string) {
+        this.alert.eventType = eventType;
         return this;
     }
 

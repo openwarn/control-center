@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapDeliveryService } from '../cap/cap-delivery.service';
@@ -14,12 +14,54 @@ import * as uuid from 'uuid/v4';
   templateUrl: './warning-creator.component.html',
   styleUrls: ['./warning-creator.component.scss']
 })
-export class WarningCreatorComponent {
+export class WarningCreatorComponent implements OnInit{
 
   languages = [
     { name: 'Deutsch (Deutschland)', value: 'de-DE' },
     { name: 'English (USA)', value: 'en-US' }
   ];
+
+  eventTypes = [
+    // Met
+    { name: 'Dürre',                  value: 'drought',       category: 'Met' },
+    { name: 'Flut',                   value: 'flood',         category: 'Met' },
+    { name: 'Hitze',                  value: 'heat wave',     category: 'Met' },
+    { name: 'Tropischer Wirbelsturm', value: 'hurricane',     category: 'Met' },
+    { name: 'Unwetter',               value: 'thunderstorm',  category: 'Met' },
+    { name: 'Flutwelle',              value: 'tsunami',       category: 'Met' },
+    { name: 'Wirbelsturm',            value: 'tornado',       category: 'Met' },
+    { name: 'Wintersturm',            value: 'winter storm',  category: 'Met' },
+    // Geo
+    { name: 'Erdbeben',               value: 'earthquake',    category: 'Geo' },
+    { name: 'Erdrutsch',              value: 'landslide',     category: 'Geo' },
+    { name: 'Vulkanausbruch',         value: 'volcano',       category: 'Geo' },
+    { name: 'Lawine',                 value: 'avalanche',     category: 'Geo' },
+    // Fire
+    { name: 'Flächenbrand',           value: 'wildfire',     category: 'Fire' },
+    { name: 'Wohnungsbrand',          value: 'fire',         category: 'Fire' },
+    // Health
+    { name: 'Grippe',                 value: 'flu',         category: 'Health' },
+    { name: 'Vergiftung',             value: 'poisoning',   category: 'Health' },
+    // CBRNE
+    { name: 'Chemieunfall',           value: 'chemical emergency',   category: 'CBRNE' },
+    { name: 'Kernexplosion',          value: 'nuclear explosion',    category: 'CBRNE' },
+    // Security
+    { name: 'Terrorgefahr',           value: 'terrorism',            category: 'Security' },
+    { name: 'Cyber-Angriff',          value: 'cyber attack',         category: 'Security' },
+    // Transport
+    { name: 'Straßensicherheit',      value: 'highway safety',       category: 'Transport' },
+    // Infra
+    { name: 'Stromausfall',           value: 'power outage',         category: 'Stromausfall' },
+    // Rescue
+    { name: 'Vermisste Person',       value: 'missing person',       category: 'Rescue' },
+    // Safety
+    { name: 'Produkt',          value: 'product',         category: 'Safety' },
+    // Other
+    { name: 'Cyber-Angriff',          value: 'conflict',            category: 'Other' },
+    { name: 'Lebensmittel',           value: 'food safety',         category: 'Other' },
+    { name: 'Mehrere Ereignisse',     value: 'complex emergencies', category: 'Other' },
+    { name: 'Sonstige',               value: 'other',               category: 'Other' }
+  ]
 
   scopes = [
     { name: 'Öffentlich', value: 'Public' },
@@ -96,6 +138,7 @@ export class WarningCreatorComponent {
     scope: 'Public',
     status: 'Actual',
     msgType: 'Alert',
+    eventType: null,
     language: 'de-DE',
     description: null,
     headline: null,
@@ -125,7 +168,7 @@ export class WarningCreatorComponent {
       Validators.compose([Validators.required, Validators.minLength(20), Validators.maxLength(200)])
     ],
     areaDesc: [this.DEFAULTS.areaDesc, Validators.required],
-    category: [this.DEFAULTS.category, Validators.required],
+    eventType: [this.DEFAULTS.eventType, Validators.required],
     urgency: [this.DEFAULTS.urgency, Validators.required],
     severity: [this.DEFAULTS.severity, Validators.required],
     certainty: [this.DEFAULTS.certainty, Validators.required],
@@ -157,7 +200,8 @@ export class WarningCreatorComponent {
       .areaDescription(form.areaDesc)
       .build()
     )
-    .category(form.category)
+    .category(form.eventType.category)
+    .eventType(form.eventType.value)
     .urgency(form.urgency)
     .severity(form.severity)
     .certainty(form.certainty)
@@ -183,6 +227,16 @@ export class WarningCreatorComponent {
 
   reset() {
     this.alertForm.reset(this.DEFAULTS);
+  }
+
+  ngOnInit() {
+    this.alertForm.controls.eventType.valueChanges.subscribe(
+      (value) => {
+        if (value) {
+          this.alertForm.controls.headline.setValue(value.name);
+        }
+      }
+    );
   }
 
 }

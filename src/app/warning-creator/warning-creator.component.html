@@ -62,6 +62,20 @@
         <h3>Beschreibungen</h3>
         <div class="row">
           <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select (change)="onEventTypeChange" placeholder="Ereignis" formControlName="eventType">
+                <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">
+                  {{ eventType.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="alertForm.controls['eventType'].hasError('required')">
+                EventType is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
               <mat-form-field class="full-width">
                 <mat-select placeholder="Sprache" formControlName="language">
                   <mat-option *ngFor="let language of languages" [value]="language.value">
@@ -92,20 +106,6 @@
           <div class="col">
             <mat-form-field class="full-width">
               <input matInput placeholder="Bereichsbeschreibung" formControlName="areaDesc">
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Kategorie des Ereignisses" formControlName="category">
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                  {{ category.name }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="alertForm.controls['category'].hasError('required')">
-                Category is <strong>required</strong>
-              </mat-error>
             </mat-form-field>
           </div>
         </div>
