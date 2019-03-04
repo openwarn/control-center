@@ -14,7 +14,7 @@ import * as uuid from 'uuid/v4';
   templateUrl: './warning-creator.component.html',
   styleUrls: ['./warning-creator.component.scss']
 })
-export class WarningCreatorComponent implements OnInit{
+export class WarningCreatorComponent implements OnInit {
 
   languages = [
     { name: 'Deutsch (Deutschland)', value: 'de-DE' },
@@ -61,7 +61,7 @@ export class WarningCreatorComponent implements OnInit{
     { name: 'Lebensmittel',           value: 'food safety',         category: 'Other' },
     { name: 'Mehrere Ereignisse',     value: 'complex emergencies', category: 'Other' },
     { name: 'Sonstige',               value: 'other',               category: 'Other' }
-  ]
+  ];
 
   scopes = [
     { name: 'Öffentlich', value: 'Public' },
