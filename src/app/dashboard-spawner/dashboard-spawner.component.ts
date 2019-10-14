@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolve
   styleUrls: ['./dashboard-spawner.component.scss']
 })
 export class DashboardSpawnerComponent implements OnInit {
-  @ViewChild('spawnHost', { read: ViewContainerRef}) spawnHost;
+  @ViewChild('spawnHost', { read: ViewContainerRef, static: true }) spawnHost;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver

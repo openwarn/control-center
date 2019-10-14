@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HealthStatusBoardComponent } from './health-status-board.component';
 import { HealthStatusService } from '../health-status.service';
-import { MatListModule } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 

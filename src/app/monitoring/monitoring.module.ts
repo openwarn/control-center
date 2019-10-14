@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HealthStatusService } from './health-status.service';
 import { HealthStatusBoardComponent } from './health-status-board/health-status-board.component';
-import { MatListModule } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
