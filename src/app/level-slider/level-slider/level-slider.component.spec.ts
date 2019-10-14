@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LevelSliderComponent } from './level-slider.component';
-import { MatSliderModule } from '@angular/material';
+import { MatSliderModule } from '@angular/material/slider';
 
 describe('LevelSliderComponent', () => {
   let component: LevelSliderComponent;
